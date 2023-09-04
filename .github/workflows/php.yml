@@ -11,18 +11,17 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
     - name: Cache Composer packages
       id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v2
       with:
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
@@ -32,26 +31,43 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+  setup-php:
+    name: Setup PHP with Xdebug
+    uses: shivammathur/setup-php@v2
+    with:
+      php-version: '8.2'
+
+  phpunit:
+    name: PHPUnit tests
+    needs: [build, setup-php]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+    
+    - name: Install PHPUnit and Xdebug
+      run: |
+        pecl install xdebug
+        composer require --dev phpunit/phpunit
+        
+    - name: PHPUnit tests
+      run: vendor/bin/phpunit
+      env:
+        XDEBUG_MODE: coverage
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     # - name: Run test suite
     #   run: composer run-script test
+    
+  run-tests:
+    name: Ejecutar tests
+    needs: phpunit
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run test suite
+      run: composer run-script test
 
-  name: Setup PHP with Xdebug
-  uses: shivammathur/setup-php@v2
-  with:
-  	php-version: '8.2'
-      coverage: xdebug
-
-
-- name: PHPUnit tests
-  uses: php-actions/phpunit@v3
-  with:
-      php_extensions: "xdebug"
-      coverage_clover: "coverage/clover.xml"
-  env:
-      XDEBUG_MODE: coverage
-       
-- name: Ejecutar tests
-  run: composer run-script test

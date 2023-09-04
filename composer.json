@@ -11,7 +11,7 @@
         "phpunit/phpunit": "^10.3"
     },
     "scripts": {   		
-    "test" : "./vendor/bin/phpunit --coverage-text"		
+        "test" : "./vendor/bin/phpunit --coverage-text"		
     }
 
 }
