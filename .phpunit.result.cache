@@ -1,1 +1,1 @@
-{"version":1,"defects":{"TrabajoSube\\ColectivoTest::testCalcularTarifa":8,"TrabajoSube\\ColectivoTest::testPagarBoleto":8},"times":{"TrabajoSube\\ColectivoTest::testCalcularTarifa":0.021,"TrabajoSube\\ColectivoTest::testGetlinea":0.006,"TrabajoSube\\ColectivoTest::testPagarBoleto":0.154}}
+{"version":1,"defects":{"TrabajoSube\\ColectivoTest::testCalcularTarifa":8,"TrabajoSube\\ColectivoTest::testPagarBoleto":8},"times":{"TrabajoSube\\ColectivoTest::testCalcularTarifa":0.021,"TrabajoSube\\ColectivoTest::testGetlinea":0.006,"TrabajoSube\\ColectivoTest::testPagarBoleto":0.008}}

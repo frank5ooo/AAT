@@ -1,7 +1,7 @@
 <?php
 class Colectivo {
     private $linea;
-
+    
     public function __construct($linea) {
         $this->linea = $linea;
     }
