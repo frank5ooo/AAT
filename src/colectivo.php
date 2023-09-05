@@ -7,15 +7,10 @@ class Colectivo {
     }
 
     public function pagarCon($tarjeta) {
-        $tarjeta->descontar(120);
+        $tarjeta->pagar(120);
         return new Boleto($this->linea);
     }
 }
 
-
-// Crear un colectivo
 $colectivo = new Colectivo("101");
 ?>
-
-
-
