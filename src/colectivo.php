@@ -1,4 +1,6 @@
 <?php
+namespace TrabajoSube;
+
 class Colectivo {
     private $linea;
     private $precio = 120;

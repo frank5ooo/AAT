@@ -1,4 +1,6 @@
 <?php
+namespace TrabajoSube;
+
 
 require 'colectivo.php';
 require 'tarjeta.php';
