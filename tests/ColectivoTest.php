@@ -2,6 +2,9 @@
 
 namespace TrabajoSube;
 
+require 'tarjeta.php';
+require 'colectivo.php';
+
 use PHPUnit\Framework\TestCase;
 
 class ColectivoTest extends TestCase {

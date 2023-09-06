@@ -1,6 +1,6 @@
 <?php
-namespace TrabajoSube;
 
+namespace TrabajoSube;
 class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;
