@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload":{
         "psr-4": {
-            "TrabajoSube\\" : "src"
+            "TrabajoSube\\" : "src/"
         }
     },
     "require-dev": {

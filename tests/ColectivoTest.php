@@ -4,11 +4,13 @@ namespace TrabajoSube;
 
 use PHPUnit\Framework\TestCase;
 
+use TrabajoSube\Tarjeta;
+
 class ColectivoTest extends TestCase {
 
     public function testPagarBoleto()
     {
-        $tarjeta = new Tarjeta();
+        $tarjeta = new tarjeta();
 
         $saldo = $tarjeta->saldo;
 

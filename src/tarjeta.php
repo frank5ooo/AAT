@@ -26,7 +26,6 @@ namespace TrabajoSube;
           }
     }
 
-    $tarjeta = new Tarjeta();
-
-
+    $tarjeta = new tarjeta();
+    
 ?>
