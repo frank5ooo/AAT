@@ -1,16 +1,27 @@
 <?php
+namespace TrabajoSube;
+
 class Colectivo {
     private $linea;
-    
+    private $precio = 120;
+
+
     public function __construct($linea) {
         $this->linea = $linea;
     }
 
     public function pagarCon($tarjeta) {
-        $tarjeta->pagar(120);
-        return new Boleto($this->linea);
+        if($tarjeta->descontar($this->precio))
+        {
+          return new Boleto($this->linea, $this->precio);   
+
+
+        }
+        
     }
 }
 
+
+// Crear un colectivo
 $colectivo = new Colectivo("101");
 ?>

@@ -4,7 +4,7 @@ namespace TrabajoSube;
 
 use PHPUnit\Framework\TestCase;
 
-use TrabajoSube\Tarjeta;
+use TrabajoSube\tarjeta;
 
 class ColectivoTest extends TestCase {
 
