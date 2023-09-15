@@ -12,13 +12,11 @@ class ColectivoTest extends TestCase {
 
     public function testPagarBoleto()
     {
-        $tarjeta = new tarjeta();
+        $tarjeta = new tarjeta(200);
 
         $saldo = $tarjeta->saldo;
 
-        $Boleto = 120;
-
-        $tarjeta->pagar($Boleto);
+        $Boleto = $colectivo->pagarCon($tarjeta);
 
         $this->assertEquals($saldo - $Boleto, $tarjeta->saldo);
     }
