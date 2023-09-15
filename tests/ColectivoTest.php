@@ -1,10 +1,12 @@
 <?php
 
-namespace TrabajoSube;
+namespace TrabajoSube\Tests;
 
 use PHPUnit\Framework\TestCase;
-
-use TrabajoSube\tarjeta;
+use TrabajoSube\Tarjeta;
+use TrabajoSube\Colectivo;
+use TrabajoSube\Boleto;
+use Exception;
 
 class ColectivoTest extends TestCase {
 

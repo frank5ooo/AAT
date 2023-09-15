@@ -1,6 +1,8 @@
 <?php
 namespace TrabajoSube;
 
+use Exception;
+
 class Colectivo {
     private $linea;
     private $precio = 120;

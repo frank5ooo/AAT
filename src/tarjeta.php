@@ -1,6 +1,9 @@
 <?php
 
 namespace TrabajoSube;
+
+use Exception;
+
 class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;

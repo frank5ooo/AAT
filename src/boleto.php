@@ -1,6 +1,7 @@
 <?php
 namespace TrabajoSube;
 
+use Exception;
 
 require 'colectivo.php';
 require 'tarjeta.php';
