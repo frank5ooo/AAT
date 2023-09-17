@@ -16,11 +16,17 @@ class Tarjeta {
     }
 
     public function recargar($monto) {
-        if (in_array($monto, self::cargasAceptadas)) {
+        if (in_array($monto, self::cargasAceptadas)) 
+        {
             $this->saldo += $monto;
-            if ($this->saldo > $this->limite_saldo) {
+            if ($this->saldo > $this->limite_saldo) 
+            {
                 $this->saldo = $this->limite_saldo;
             }
+        }
+        else
+        {
+            echo ("Monto de recarga no válido: $monto");
         }
     }
 
@@ -49,4 +55,4 @@ class Tarjeta {
 
 
 // Crear una tarjeta con saldo inicial
-$tarjeta = new Tarjeta(0);
+$tarjeta = new Tarjeta(100);
