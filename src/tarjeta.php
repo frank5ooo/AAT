@@ -7,14 +7,16 @@ use Exception;
 class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;
-    const  cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 2500, 3000, 3500, 4000];
+    const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
+                            800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
+                            2500, 3000, 3500, 4000];
 
     public function __construct($saldo) {
         $this->saldo = $saldo;
     }
 
     public function recargar($monto) {
-        if (in_array($monto, cargasAceptadas)) {
+        if (in_array($monto, self::cargasAceptadas)) {
             $this->saldo += $monto;
             if ($this->saldo > $this->limite_saldo) {
                 $this->saldo = $this->limite_saldo;
@@ -27,7 +29,8 @@ class Tarjeta {
             $this->saldo -= $precio;
             return true;
         }
-        else{
+        else
+        {
             if( ($this->saldo - $precio) >= -211.84){
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
@@ -46,4 +49,4 @@ class Tarjeta {
 
 
 // Crear una tarjeta con saldo inicial
-$tarjeta = new Tarjeta(500);
+$tarjeta = new Tarjeta(0);
