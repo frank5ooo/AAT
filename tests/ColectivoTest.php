@@ -3,7 +3,7 @@
 namespace TrabajoSube\Tests;
 
 use PHPUnit\Framework\TestCase;
-use TrabajoSube\Tarjeta; // Importa la clase Tarjeta
+use TrabajoSube\tarjeta;
 use TrabajoSube\colectivo;
 use TrabajoSube\boleto;
 use Exception;
