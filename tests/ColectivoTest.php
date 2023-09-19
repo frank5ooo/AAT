@@ -3,7 +3,7 @@
 namespace TrabajoSube\Tests;
 
 use PHPUnit\Framework\TestCase;
-use TrabajoSube\tarjeta; // Importa la clase Tarjeta
+use TrabajoSube\tarjeta;
 use TrabajoSube\colectivo;
 use TrabajoSube\boleto;
 
@@ -12,19 +12,17 @@ class ColectivoTest extends TestCase {
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
 
-    private $montosDePrueba = [1,500, 1000,6600];
+    private $montosDePrueba = [-120, 1, 500, 1000,6600];
 
-    public function testRecargarConMontoValido() 
+    private $boleto = 120;
+    public function testRecargar() 
     {
-        // Crear una instancia de la clase Tarjeta con un saldo inicial de 0
         foreach ($this->montosDePrueba as $prueba)
         {
             $tarjeta = new Tarjeta($prueba);
         
             foreach ($this->montosValidos as $monto) 
-            {
-                //$tarjetaCopia = $tarjeta;
-        
+            {        
                 $saldoInicial = $tarjeta->saldo;
         
                 $tarjeta->recargar($monto);
@@ -34,7 +32,48 @@ class ColectivoTest extends TestCase {
                 $this->assertEquals($saldoEsperado, $tarjeta->saldo);
             }
         }
-
-        
     }
+
+    public function testDescontarConSaldo()
+    {      
+        
+        foreach ($this->montosDePrueba as $prueba)
+        {
+            $tarjeta = new tarjeta($prueba);
+            
+            if($prueba >= $this->boleto)
+            {
+                $tarjeta->descontar($this->boleto);
+
+                $this->assertEquals($prueba-$this->boleto, $tarjeta->saldo);
+            }
+        }
+    }
+
+    public function testDescontarSinSaldo()
+    {
+        foreach ($this->montosDePrueba as $pruebaSaldo) 
+        {
+            $tarjeta = new Tarjeta($pruebaSaldo);
+            
+            $resultado = $tarjeta->descontar($this->boleto);
+
+            if ($pruebaSaldo >= $this->boleto) 
+            {
+                $this->assertTrue($resultado);
+                $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
+            } 
+            elseif ($pruebaSaldo >= -211.84) 
+            {
+                $this->assertTrue($resultado);
+                $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
+            } 
+            else 
+            {
+                $this->assertFalse($resultado);
+                $this->assertEquals($pruebaSaldo, $tarjeta->getSaldo());
+            }
+        }
+    }
+
 }

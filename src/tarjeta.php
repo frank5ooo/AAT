@@ -5,15 +5,19 @@ namespace TrabajoSube;
 class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;
+    public $precio = 120;
+
     const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
 
-    public function __construct($saldo) {
+    public function __construct($saldo) 
+    {
         $this->saldo = $saldo;
     }
 
-    public function recargar($monto) {
+    public function recargar($monto) 
+    {
         if (in_array($monto, self::cargasAceptadas)) 
         {
             $this->saldo += $monto;
@@ -28,19 +32,23 @@ class Tarjeta {
         }
     }
 
-    public function descontar($precio) {
-        if ($this->saldo >= $precio) {
+    public function descontar($precio) 
+    {
+        if ($this->saldo >= $precio)
+        {
             $this->saldo -= $precio;
             return true;
         }
         else
         {
-            if( ($this->saldo - $precio) >= -211.84){
+            if($this->saldo >= -211.84)
+            {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
                 return true;
             }
-            else{
+            else
+            {
                 return false;
             }
         }
@@ -53,4 +61,4 @@ class Tarjeta {
 
 
 // Crear una tarjeta con saldo inicial
-$tarjeta = new Tarjeta(-200);
+$tarjeta = new Tarjeta(200);
