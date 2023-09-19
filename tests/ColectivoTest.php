@@ -13,20 +13,29 @@ class ColectivoTest extends TestCase {
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
 
-    public function testRecargarConMontoValido() {
+    private $montosDePrueba = [1,500, 1000,6600];
+
+    public function testRecargarConMontoValido() 
+    {
         // Crear una instancia de la clase Tarjeta con un saldo inicial de 0
-        $tarjeta = new Tarjeta(00);
+        foreach ($this->montosDePrueba as $prueba)
+        {
+            $tarjeta = new Tarjeta($prueba);
         
-        foreach ($this->montosValidos as $monto) {
-            //$tarjetaCopia = $tarjeta;
-    
-            $saldoInicial = $tarjeta->saldo;
-    
-            $tarjeta->recargar($monto);
-    
-            $saldoEsperado = min($saldoInicial + $monto, 6600);
-    
-            $this->assertEquals($saldoEsperado, $tarjeta->saldo);
+            foreach ($this->montosValidos as $monto) 
+            {
+                //$tarjetaCopia = $tarjeta;
+        
+                $saldoInicial = $tarjeta->saldo;
+        
+                $tarjeta->recargar($monto);
+        
+                $saldoEsperado = min($saldoInicial + $monto, 6600);
+        
+                $this->assertEquals($saldoEsperado, $tarjeta->saldo);
+            }
         }
+
+        
     }
 }

@@ -2,8 +2,6 @@
 
 namespace TrabajoSube;
 
-use Exception;
-
 class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;
@@ -55,4 +53,4 @@ class Tarjeta {
 
 
 // Crear una tarjeta con saldo inicial
-$tarjeta = new Tarjeta(100);
+$tarjeta = new Tarjeta(-200);

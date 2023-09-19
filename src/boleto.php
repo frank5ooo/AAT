@@ -8,17 +8,18 @@ require 'tarjeta.php';
 
 class Boleto {
     
-    public function __construct($linea , $precio) {
+    public function __construct($linea , $precio) 
+    {
         $this->linea = $linea;
         $this->precio = $precio;
     }
 
-    public function __toString() {
-    return "Boleto de colectivo - Línea " . $this->linea . " - Precio: $" . number_format($this->precio, 2);
-}
+    public function __toString() 
+    {
+        return "Boleto de colectivo - Línea " . $this->linea . " - Precio: $" . number_format($this->precio, 2);
+    }
 }
 
-// Realizar un viaje
 $boleto = $colectivo->pagarCon($tarjeta);
 
 if ($boleto) {
