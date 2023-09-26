@@ -52,13 +52,10 @@ class Tarjeta {
                 return false;
             }
         }
-        
     }
     public function getSaldo() {
       return $this->saldo;
     }
 }
 
-
-// Crear una tarjeta con saldo inicial
 $tarjeta = new Tarjeta(200);
