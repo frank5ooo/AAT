@@ -15,14 +15,9 @@ class Colectivo {
         if($tarjeta->descontar($this->precio))
         {
             return new Boleto($this->linea, $this->precio);   
-        }
-        
+        } 
     }
-
-    
 }
 
-
-// Crear un colectivo
 $colectivo = new Colectivo("101");
 ?>
