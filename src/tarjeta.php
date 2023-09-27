@@ -41,7 +41,7 @@ class Tarjeta {
         }
         else
         {
-            if($this->saldo >= -211.84)
+            if($this->saldo >= -91.84)  //-91.84 ya que en caso de tener un saldo igual o mayor a este al descontarle los 120 quedaria un saldo igual o mayor a -211.84 
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
@@ -49,6 +49,7 @@ class Tarjeta {
             }
             else
             {
+                echo "Viaje Plus no disponible. \n"
                 return false;
             }
         }
