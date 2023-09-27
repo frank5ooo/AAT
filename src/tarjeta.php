@@ -49,7 +49,7 @@ class Tarjeta {
             }
             else
             {
-                echo "Viaje Plus no disponible. \n"
+                echo "Viaje Plus no disponible. \n";
                 return false;
             }
         }
