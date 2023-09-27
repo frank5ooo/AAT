@@ -1,28 +1,26 @@
 <?php
-class Boleto {
-    private $linea;
-  
-    private $precio = 120;
+namespace TrabajoSube;
 
-    public function __construct($linea) {
-        $this->linea = $linea;
-    }
-
-    public function __toString() {
-    return "Boleto de colectivo - Línea " . $this->linea . " - Precio: $" . number_format($this->precio, 2);
-}
-
-
-}
-
+use Exception;
 
 require 'colectivo.php';
 require 'tarjeta.php';
 
+class Boleto {
+    
+    public function __construct($linea , $precio) 
+    {
+        $this->linea = $linea;
+        $this->precio = $precio;
+    }
 
-// Realizar un viaje
+    public function __toString() 
+    {
+        return "Boleto de colectivo - Línea " . $this->linea . " - Precio: $" . number_format($this->precio, 2);
+    }
+}
+
 $boleto = $colectivo->pagarCon($tarjeta);
-
 
 if ($boleto) {
     echo "Viaje realizado.\n";
@@ -32,7 +30,4 @@ if ($boleto) {
 else {
     echo "Saldo insuficiente.\n";
 }
-?>
-
-
 ?>

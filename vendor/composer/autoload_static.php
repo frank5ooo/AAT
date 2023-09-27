@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbfc599459dcd944eb16ff095a1135290
+class ComposerStaticInitd7466929f71310c3e8d00ad9e8166e34
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
@@ -989,6 +989,7 @@ class ComposerStaticInitbfc599459dcd944eb16ff095a1135290
         'SebastianBergmann\\CodeCoverage\\Driver\\XdebugNotAvailableException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/XdebugNotAvailableException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\XdebugNotEnabledException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/XdebugNotEnabledException.php',
         'SebastianBergmann\\CodeCoverage\\Exception' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/Exception.php',
+        'SebastianBergmann\\CodeCoverage\\FileCouldNotBeWrittenException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/FileCouldNotBeWrittenException.php',
         'SebastianBergmann\\CodeCoverage\\Filter' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Filter.php',
         'SebastianBergmann\\CodeCoverage\\InvalidArgumentException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/InvalidArgumentException.php',
         'SebastianBergmann\\CodeCoverage\\NoCodeCoverageDriverAvailableException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/NoCodeCoverageDriverAvailableException.php',
@@ -1183,9 +1184,9 @@ class ComposerStaticInitbfc599459dcd944eb16ff095a1135290
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbfc599459dcd944eb16ff095a1135290::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbfc599459dcd944eb16ff095a1135290::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbfc599459dcd944eb16ff095a1135290::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd7466929f71310c3e8d00ad9e8166e34::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd7466929f71310c3e8d00ad9e8166e34::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd7466929f71310c3e8d00ad9e8166e34::$classMap;
 
         }, null, ClassLoader::class);
     }
