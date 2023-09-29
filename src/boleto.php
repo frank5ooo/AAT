@@ -8,15 +8,18 @@ require 'tarjeta.php';
 
 class Boleto {
     
-    public function __construct($linea , $precio) 
+    private $precioMostrado; // Precio a mostrar en el boleto
+
+    public function __construct($linea , $precio, $precioMostrado) 
     {
         $this->linea = $linea;
         $this->precio = $precio;
+        $this->precioMostrado = $precioMostrado;
     }
 
     public function __toString() 
     {
-        return "Boleto de colectivo - Línea " . $this->linea . " - Precio: $" . number_format($this->precio, 2);
+        return "Boleto de colectivo - Línea " . $this->linea . " - Precio: $" . number_format($this->precioMostrado, 2);
     }
 }
 
