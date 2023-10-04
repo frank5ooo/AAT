@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use TrabajoSube\tarjeta;
 use TrabajoSube\colectivo;
 use TrabajoSube\boleto;
+use TrabajoSube\franquiciacompleta;
 
 
 class ColectivoTest extends TestCase {
