@@ -77,4 +77,17 @@ class ColectivoTest extends TestCase {
         }
     }
 
+    public function testPagarConFranquiciaCompleta()
+    {
+        foreach ($this->montosDePrueba as $prueba){
+            $tarjeta = new FranquiciaCompleta($prueba);
+
+            $resultado = $tarjeta->descontar($this->boleto);
+
+            $this->assertTrue($resultado);
+            $this->assertEquals($prueba, $tarjeta->getSaldo());
+        }
+ 
+    }
+
 }
