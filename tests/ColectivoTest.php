@@ -7,6 +7,7 @@ use TrabajoSube\tarjeta;
 use TrabajoSube\colectivo;
 use TrabajoSube\boleto;
 use TrabajoSube\franquiciacompleta;
+use TrabajoSube\medioboleto;
 
 
 class ColectivoTest extends TestCase {
@@ -89,6 +90,30 @@ class ColectivoTest extends TestCase {
             $this->assertEquals($prueba, $tarjeta->getSaldo());
         }
  
+    }
+
+    public function testPagarConMedioBoleto()
+    {
+        $boletoMedio =  $this->boleto /2;
+        foreach ($this->montosDePrueba as $prueba){
+
+            $tarjeta = new MedioBoleto($prueba); 
+            $resultado = $tarjeta->descontar($this->boleto);
+
+            if ($pruebaSaldo >= ($boletoMedio)){
+                $this->assertTrue($resultado);
+                $this->assertEquals($prueba - $boletoMedio, $tarjeta->getSaldo());
+            }
+            elseif ($pruebaSaldo >= -151.84){
+                $this->assertTrue($resultado);
+                $this->assertEquals($prueba - ($this->boleto), $tarjeta->getSaldo());
+            } 
+            else{
+                $this->assertFalse($resultado);
+                $this->assertEquals($prueba, $tarjeta->getSaldo());
+            }
+        }
+
     }
 
 }
