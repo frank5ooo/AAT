@@ -100,11 +100,11 @@ class ColectivoTest extends TestCase {
             $tarjeta = new MedioBoleto($prueba); 
             $resultado = $tarjeta->descontar($this->boleto);
 
-            if ($pruebaSaldo >= ($boletoMedio)){
+            if ($prueba >= ($boletoMedio)){
                 $this->assertTrue($resultado);
                 $this->assertEquals($prueba - $boletoMedio, $tarjeta->getSaldo());
             }
-            elseif ($pruebaSaldo >= -151.84){
+            elseif ($prueba >= -151.84){
                 $this->assertTrue($resultado);
                 $this->assertEquals($prueba - ($this->boleto), $tarjeta->getSaldo());
             } 
