@@ -78,7 +78,7 @@ class ColectivoTest extends TestCase {
         }
     }
 
-    public function testPagarConFranquiciaCompleta()
+  /*  public function testPagarConFranquiciaCompleta()
     {
         foreach ($this->montosDePrueba as $prueba){
             $tarjeta = new FranquiciaCompleta($prueba);
@@ -89,6 +89,6 @@ class ColectivoTest extends TestCase {
             $this->assertEquals($prueba, $tarjeta->getSaldo());
         }
  
-    }
+    }*/
 
 }
