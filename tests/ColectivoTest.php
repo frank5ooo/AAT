@@ -13,7 +13,7 @@ class ColectivoTest extends TestCase {
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
 
-    private $montosDePrueba = [-120, 1, 500, 1000,6600];
+    private $montosDePrueba = [-300,-120,-91.84, 1, 500, 1000,6600];
 
     private $boleto = 120;
     public function testRecargar() 
@@ -59,17 +59,17 @@ class ColectivoTest extends TestCase {
             
             $resultado = $tarjeta->descontar($this->boleto);
 
-            if ($pruebaSaldo >= $this->boleto) 
+            if ($pruebaSaldo >= $this->boleto)      //pagar con saldo
             {
                 $this->assertTrue($resultado);
                 $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
             } 
-            elseif ($pruebaSaldo >= -91.84) 
+            elseif ($pruebaSaldo >= -91.84)     //pagar con saldo negativo pero mayor al menor posible
             {
                 $this->assertTrue($resultado);
                 $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
             } 
-            else 
+            else                                // no tiene ni viaje plus
             {
                 $this->assertFalse($resultado);
                 $this->assertEquals($pruebaSaldo, $tarjeta->getSaldo());
