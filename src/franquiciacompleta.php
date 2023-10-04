@@ -2,7 +2,7 @@
 
 namespace TrabajoSube;
 
-require 'tarjeta.php';
+use TrabajoSube\tarjeta;
 
 class FranquiciaCompleta extends Tarjeta {
     public function descontar($precio) {

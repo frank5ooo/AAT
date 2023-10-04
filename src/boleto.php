@@ -3,8 +3,8 @@ namespace TrabajoSube;
 
 use Exception;
 
-require 'colectivo.php';
-require 'tarjeta.php';
+use TrabajoSube\tarjeta;
+use TrabajoSube\colectivo;
 
 class Boleto {
     
