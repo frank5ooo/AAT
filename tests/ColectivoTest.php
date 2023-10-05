@@ -77,4 +77,22 @@ class ColectivoTest extends TestCase {
         }
     }
 
+    public function testRecargaConExcedente()
+    {
+        $tarjeta = new Tarjeta(5000);
+        $tarjeta->recargar(2000);  //se cargan 2000 por lo que quedaran 400 de saldo pendiente
+        
+        $this->assertEquals(6600, $tarjeta->saldo);
+        $this->assertEquals(400, $tarjeta->saldoPendiente);
+    }
+
+   /* public function testRecargaDespuesDeViaje()
+    {
+        $tarjeta = new Tarjeta(5000);
+        $tarjeta->recargar(2000); //antes del viaje hay 400 en saldo pendiente, despues del mismo hay 280
+        
+        $tarjeta->descontar($this->boleto);
+        $this->assertEquals(6600, $tarjeta->saldo);
+        $this->assertEquals(280 , $tarjeta->saldoPendiente);
+    } */
 }

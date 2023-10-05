@@ -20,10 +20,14 @@ class Tarjeta {
     {
         if (in_array($monto, self::cargasAceptadas)) 
         {
+            $saldo_anterior = $this->saldo;
             $this->saldo += $monto;
+
             if ($this->saldo > $this->limite_saldo) 
             {
+                $saldoPendiente = $this->saldo - $this->limite_saldo;
                 $this->saldo = $this->limite_saldo;
+                $this->saldoPendiente = $saldoPendiente;
             }
         }
         else
@@ -53,10 +57,16 @@ class Tarjeta {
                 return false;
             }
         }
+
+
+        
+   /*     if(isset($this->saldoPendiente) && $this->saldoPendiente > 0){
+            $this->recargar($this->saldoPendiente);
+            unset($this->saldoPendiente);   //se quita el saldo pendiente ya que al recargar se asignara uno nuevo
+        }*/
     }
     public function getSaldo() {
       return $this->saldo;
     }
 }
 
-$tarjeta = new Tarjeta(200);
