@@ -36,11 +36,27 @@ class Tarjeta {
         }
     }
 
+    public function recargarPendiente($monto)                //esta funcion es para que no se fije si el monto de recarga es valido en el caso de ser saldo pendiente
+    {
+        $this->saldo += $monto;
+
+        if ($this->saldo > $this->limite_saldo){
+            $saldoPendiente = $this->saldo - $this->limite_saldo;
+            $this->saldo = $this->limite_saldo;
+            $this->saldoPendiente = $saldoPendiente;
+        }
+    }
+
     public function descontar($precio) 
     {
         if ($this->saldo >= $precio)
         {
             $this->saldo -= $precio;
+
+            if(isset($this->saldoPendiente) && $this->saldoPendiente > 0){
+                $this->recargarPendiente($this->saldoPendiente);
+            }
+
             return true;
         }
         else
@@ -59,11 +75,6 @@ class Tarjeta {
         }
 
 
-        
-   /*     if(isset($this->saldoPendiente) && $this->saldoPendiente > 0){
-            $this->recargar($this->saldoPendiente);
-            unset($this->saldoPendiente);   //se quita el saldo pendiente ya que al recargar se asignara uno nuevo
-        }*/
     }
     public function getSaldo() {
       return $this->saldo;
