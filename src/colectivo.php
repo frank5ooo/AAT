@@ -15,6 +15,7 @@ class Colectivo {
         {
             return new Boleto($this->linea, $this->precio);   
         } 
+        
     }
 }
 

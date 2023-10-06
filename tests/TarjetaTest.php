@@ -8,7 +8,7 @@ use TrabajoSube\colectivo;
 use TrabajoSube\boleto;
 
 
-class ColectivoTest extends TestCase {
+class TarjetaTest extends TestCase {
     private $montosValidos = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
@@ -50,7 +50,6 @@ class ColectivoTest extends TestCase {
             }
         }
     }
-
     public function testDescontarSinSaldo()
     {
         foreach ($this->montosDePrueba as $pruebaSaldo) 
@@ -63,16 +62,20 @@ class ColectivoTest extends TestCase {
             {
                 $this->assertTrue($resultado);
                 $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
+                $this->assertEquals(0, $tarjeta->viajePlus);
             } 
             elseif ($pruebaSaldo >= -91.84) 
             {
                 $this->assertTrue($resultado);
                 $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
+                $this->assertEquals($tarjeta->viajePlus<=2, $tarjeta->viajePlus);
             } 
             else 
             {
                 $this->assertFalse($resultado);
                 $this->assertEquals($pruebaSaldo, $tarjeta->getSaldo());
+                $this->assertEquals($tarjeta->viajePlus>2, $tarjeta->viajePlus);
+
             }
         }
     }
@@ -86,7 +89,7 @@ class ColectivoTest extends TestCase {
         $this->assertEquals(400, $tarjeta->saldoPendiente);
     }
 
-    public function testRecargaDespuesDeViaje()
+    public function testRecargaConExcedenteDespuesDeViaje()
     {
         $tarjeta = new Tarjeta(5000);
         $tarjeta->recargar(2000); //antes del viaje hay 400 en saldo pendiente, despues del mismo hay 280

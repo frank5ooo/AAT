@@ -5,8 +5,8 @@ namespace TrabajoSube;
 class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;
-    public $precio = 120;
-
+    private $precio = 120;
+    public $viajePlus =0;
     const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
@@ -20,7 +20,6 @@ class Tarjeta {
     {
         if (in_array($monto, self::cargasAceptadas)) 
         {
-            $saldo_anterior = $this->saldo;
             $this->saldo += $monto;
 
             if ($this->saldo > $this->limite_saldo) 
@@ -57,7 +56,7 @@ class Tarjeta {
             if(isset($this->saldoPendiente) && $this->saldoPendiente > 0)
             {
                 $this->recargarPendiente($this->saldoPendiente);
-                
+
             }
 
             return true;
@@ -68,12 +67,17 @@ class Tarjeta {
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
+                $this->viajePlus ++;
+
                 return true;
             }
             else
-            {
-                echo "Viaje Plus no disponible. \n";
-                return false;
+            {   
+                if($this-> viajePlus<=2)
+                {
+                    echo "Viaje Plus no disponible. \n";
+                    return false;
+                }
             }
         }
     }
