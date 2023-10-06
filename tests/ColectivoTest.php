@@ -80,8 +80,8 @@ class ColectivoTest extends TestCase {
     public function testRecargaConExcedente()
     {
         $tarjeta = new Tarjeta(5000);
-        $tarjeta->recargar(2000);  //se cargan 2000 por lo que quedaran 400 de saldo pendiente
-        
+        $tarjeta->recargar(2000);  // Se cargan 2400 por lo que quedará 5000 + 2400 - 6000 = 800 en saldo
+    
         $this->assertEquals(6600, $tarjeta->saldo);
         $this->assertEquals(400, $tarjeta->saldoPendiente);
     }

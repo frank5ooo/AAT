@@ -40,7 +40,8 @@ class Tarjeta {
     {
         $this->saldo += $monto;
 
-        if ($this->saldo > $this->limite_saldo){
+        if ($this->saldo > $this->limite_saldo)
+        {
             $saldoPendiente = $this->saldo - $this->limite_saldo;
             $this->saldo = $this->limite_saldo;
             $this->saldoPendiente = $saldoPendiente;
@@ -50,11 +51,13 @@ class Tarjeta {
     public function descontar($precio) 
     {
         if ($this->saldo >= $precio)
-        {
+        {            
             $this->saldo -= $precio;
 
-            if(isset($this->saldoPendiente) && $this->saldoPendiente > 0){
+            if(isset($this->saldoPendiente) && $this->saldoPendiente > 0)
+            {
                 $this->recargarPendiente($this->saldoPendiente);
+                
             }
 
             return true;
@@ -73,8 +76,6 @@ class Tarjeta {
                 return false;
             }
         }
-
-
     }
     public function getSaldo() {
       return $this->saldo;
