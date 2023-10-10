@@ -137,4 +137,53 @@ class TarjetaTest extends TestCase {
 
     }
 
+    public function testLimiteDeViajesPorDia() {
+        $medioBoleto = new MedioBoleto(2000);
+        
+        // Simular 4 viajes en el mismo día
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 1
+        $this->assertEquals(1940 , $medioBoleto->getSaldo());                
+        $medioBoleto->setUltimoTiempo();
+
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 2
+        $this->assertEquals(1880 , $medioBoleto->getSaldo());  
+        $medioBoleto->setUltimoTiempo();
+
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 3
+        $this->assertEquals(1820 , $medioBoleto->getSaldo());  
+        $medioBoleto->setUltimoTiempo();
+
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 4
+        $this->assertEquals(1760 , $medioBoleto->getSaldo());  
+        $medioBoleto->setUltimoTiempo();
+        
+        // Simular un quinto viaje
+        $this->assertTrue($medioBoleto->descontar(120)); // Quinto viaje
+        
+        // Verificar que se cobra el precio completo para el quinto viaje
+        $this->expectOutputString("Ha alcanzado el límite de 4 viajes con medio boleto hoy. Se le cobrará el precio completo.\n");
+    }
+
+    public function testSinPasarLimiteDeViajesPorDia() {
+        $medioBoleto = new MedioBoleto(2000);
+        
+        // Simular 4 viajes en el mismo día
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 1
+        $this->assertEquals(1940 , $medioBoleto->getSaldo());                
+        $medioBoleto->setUltimoTiempo();
+
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 2
+        $this->assertEquals(1880 , $medioBoleto->getSaldo());  
+        $medioBoleto->setUltimoTiempo();
+
+        $this->assertTrue($medioBoleto->descontar(120));    //viaje 3
+        $this->assertEquals(1820 , $medioBoleto->getSaldo());  
+        $medioBoleto->setUltimoTiempo();
+        
+        // Simular un cuarto viaje
+        $this->assertTrue($medioBoleto->descontar(120)); // viaje 4
+        $this->assertEquals(1760 , $medioBoleto->getSaldo());  
+        
+    }
 }
+
