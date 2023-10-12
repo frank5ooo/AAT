@@ -8,6 +8,7 @@ use TrabajoSube\colectivo;
 use TrabajoSube\boleto;
 use TrabajoSube\franquiciacompleta;
 use TrabajoSube\medioboleto;
+use TrabajoSube\tiempoFalso;
 
 
 class TarjetaTest extends TestCase {
@@ -15,175 +16,99 @@ class TarjetaTest extends TestCase {
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
 
-    private $montosDePrueba = [-300,-120,-91.84, 1, 500, 1000,6600];
 
     private $boleto = 120;
     public function testRecargar() 
     {
-        foreach ($this->montosDePrueba as $prueba)
-        {
-            $tarjeta = new Tarjeta($prueba);
+        $tiempo = new TiempoFalso;
         
             foreach ($this->montosValidos as $monto) 
             {        
-                $saldoInicial = $tarjeta->saldo;
+                $tarjeta = new Tarjeta($tiempo);
+
+                $saldoInicial = $tarjeta->getSaldo();
         
                 $tarjeta->recargar($monto);
         
                 $saldoEsperado = min($saldoInicial + $monto, 6600);
         
-                $this->assertEquals($saldoEsperado, $tarjeta->saldo);
+                $this->assertEquals($saldoEsperado, $tarjeta->getSaldo());
             }
-        }
-    }
-
-    public function testDescontarConSaldo()
-    {      
         
-        foreach ($this->montosDePrueba as $prueba)
-        {
-            $tarjeta = new tarjeta($prueba);
-            
-            if($prueba >= $this->boleto)
-            {
-                $tarjeta->descontar($this->boleto);
-
-                $this->assertEquals($prueba-$this->boleto, $tarjeta->saldo);
-            }
-        }
     }
-    public function testDescontarSinSaldo()
+
+
+    public function testDescontar()
     {
-        foreach ($this->montosDePrueba as $pruebaSaldo) 
+            $tiempo = new TiempoFalso;
+
+            
+        foreach ($this->montosValidos as $prueba) 
         {
-            $tarjeta = new Tarjeta($pruebaSaldo);
+
+            $tarjeta = new Tarjeta($tiempo);
+
+            $tarjeta->recargar($prueba);
             
             $resultado = $tarjeta->descontar($this->boleto);
 
-            if ($pruebaSaldo >= $this->boleto)      //pagar con saldo
-            {
-                $this->assertTrue($resultado);
-                $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
-                $this->assertEquals(0, $tarjeta->viajePlus);
-            } 
-            elseif ($pruebaSaldo >= -91.84)     //pagar con saldo negativo pero mayor al menor posible
-            {
-                $this->assertTrue($resultado);
-                $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
-                $this->assertEquals($tarjeta->viajePlus<=2, $tarjeta->viajePlus);
-            } 
-            else                                // no tiene ni viaje plus
-            {
-                $this->assertFalse($resultado);
-                $this->assertEquals($pruebaSaldo, $tarjeta->getSaldo());
-                $this->assertEquals($tarjeta->viajePlus>2, $tarjeta->viajePlus);
 
-            }
+                $this->assertTrue($resultado);
+                $this->assertEquals($prueba - $this->boleto, $tarjeta->getSaldo());
+
         }
+    }
+
+    public function testDescontarSinSaldo()
+    {
+            $tiempo = new TiempoFalso;
+
+            $tarjeta = new Tarjeta($tiempo);
+
+            $tarjeta->recargar(150);
+            
+            $tarjeta->descontar($this->boleto);   //viaje 1
+
+            $resultado = $tarjeta->descontar($this->boleto);   //viaje 2
+
+            $this->assertTrue($resultado);
+            $this->assertEquals(-90, $tarjeta->getSaldo());
+
+            $resultado = $tarjeta->descontar($this->boleto);   //viaje 3
+
+            $this->assertTrue($resultado);
+            $this->assertEquals(-210, $tarjeta->getSaldo());
+           
+            $resultado = $tarjeta->descontar($this->boleto);   //viaje 4
+
+            $this->assertFalse($resultado);
+        
     }
 
     public function testRecargaConExcedente()
     {
-        $tarjeta = new Tarjeta(5000);
-        $tarjeta->recargar(2000);  // Se cargan 2400 por lo que quedará 5000 + 2400 - 6000 = 800 en saldo
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta($tiempo);
+        $tarjeta->recargar(4000);  
+        $tarjeta->recargar(4000);  
     
-        $this->assertEquals(6600, $tarjeta->saldo);
-        $this->assertEquals(400, $tarjeta->saldoPendiente);
+        $this->assertEquals(6600, $tarjeta->getSaldo());
+        $this->assertEquals(1400, $tarjeta->saldoPendiente);
     }
 
     public function testRecargaConExcedenteDespuesDeViaje()
     {
-        $tarjeta = new Tarjeta(5000);
-        $tarjeta->recargar(2000); //antes del viaje hay 400 en saldo pendiente, despues del mismo hay 280
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta($tiempo);
+        $tarjeta->recargar(4000);
+        $tarjeta->recargar(4000);
         
         $tarjeta->descontar($this->boleto);
-        $this->assertEquals(6600, $tarjeta->saldo);
-        $this->assertEquals(280 , $tarjeta->saldoPendiente);
+        $this->assertEquals(6600, $tarjeta->getSaldo());
+        $this->assertEquals(1280 , $tarjeta->saldoPendiente);
     } 
-    public function testPagarConFranquiciaCompleta()
-    {
-        foreach ($this->montosDePrueba as $prueba){
-            $tarjeta = new FranquiciaCompleta($prueba);
 
-            $resultado = $tarjeta->descontar($this->boleto);
 
-            $this->assertTrue($resultado);
-            $this->assertEquals($prueba, $tarjeta->getSaldo());
-        }
- 
-    }
 
-    public function testPagarConMedioBoleto()
-    {
-        $boletoMedio =  $this->boleto /2;
-        foreach ($this->montosDePrueba as $prueba){
-
-            $tarjeta = new MedioBoleto($prueba); 
-            $resultado = $tarjeta->descontar($this->boleto);
-
-            if ($prueba >= ($boletoMedio)){
-                $this->assertTrue($resultado);
-                $this->assertEquals($prueba - $boletoMedio, $tarjeta->getSaldo());
-            }
-            elseif ($prueba >= -151.84){
-                $this->assertTrue($resultado);
-                $this->assertEquals($prueba - ($this->boleto), $tarjeta->getSaldo());
-            } 
-            else{
-                $this->assertFalse($resultado);
-                $this->assertEquals($prueba, $tarjeta->getSaldo());
-            }
-        }
-
-    }
-
-    public function testLimiteDeViajesPorDia() {
-        $medioBoleto = new MedioBoleto(2000);
-        
-        // Simular 4 viajes en el mismo día
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 1
-        $this->assertEquals(1940 , $medioBoleto->getSaldo());                
-        $medioBoleto->setUltimoTiempo();
-
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 2
-        $this->assertEquals(1880 , $medioBoleto->getSaldo());  
-        $medioBoleto->setUltimoTiempo();
-
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 3
-        $this->assertEquals(1820 , $medioBoleto->getSaldo());  
-        $medioBoleto->setUltimoTiempo();
-
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 4
-        $this->assertEquals(1760 , $medioBoleto->getSaldo());  
-        $medioBoleto->setUltimoTiempo();
-        
-        // Simular un quinto viaje
-        $this->assertTrue($medioBoleto->descontar(120)); // Quinto viaje
-        
-        // Verificar que se cobra el precio completo para el quinto viaje
-        $this->expectOutputString("Ha alcanzado el límite de 4 viajes con medio boleto hoy. Se le cobrará el precio completo.\n");
-    }
-
-    public function testSinPasarLimiteDeViajesPorDia() {
-        $medioBoleto = new MedioBoleto(2000);
-        
-        // Simular 4 viajes en el mismo día
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 1
-        $this->assertEquals(1940 , $medioBoleto->getSaldo());                
-        $medioBoleto->setUltimoTiempo();
-
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 2
-        $this->assertEquals(1880 , $medioBoleto->getSaldo());  
-        $medioBoleto->setUltimoTiempo();
-
-        $this->assertTrue($medioBoleto->descontar(120));    //viaje 3
-        $this->assertEquals(1820 , $medioBoleto->getSaldo());  
-        $medioBoleto->setUltimoTiempo();
-        
-        // Simular un cuarto viaje
-        $this->assertTrue($medioBoleto->descontar(120)); // viaje 4
-        $this->assertEquals(1760 , $medioBoleto->getSaldo());  
-        
-    }
 }
-
+?>

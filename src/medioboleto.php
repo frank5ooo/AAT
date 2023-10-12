@@ -5,14 +5,11 @@ namespace TrabajoSube;
 use TrabajoSube\tarjeta;
 
 class MedioBoleto extends Tarjeta {
-    private $ultimaMarcaTiempo;
-    private $viajesHoy;
+    private $ultimaMarcaTiempo = null;
+    private $viajesHoy= 0;
     private $fechaActual;
-
-    public function __construct($saldo) {
-        parent::__construct($saldo);
-        $this->ultimaMarcaTiempo = null;
-        $this->viajesHoy = 0;
+   
+    public function __construct() {
         $this->fechaActual = date("Y-m-d");
     }
 
@@ -24,7 +21,6 @@ class MedioBoleto extends Tarjeta {
             $this->fechaActual = $fechaNueva;
         }
 
-      
         if ($this->viajesHoy >= 4) {
           
             if ($this->saldo >= $precio) {
@@ -40,6 +36,7 @@ class MedioBoleto extends Tarjeta {
                 return false;
             }
         }
+        else{
 
         // Verificar el tiempo entre viajes
         $marcaActual = time();
@@ -62,10 +59,11 @@ class MedioBoleto extends Tarjeta {
                 echo "Viaje Plus utilizado.\n";
                 return true;
             } else {
-                echo "Viaje Plus no disponible. \n";
+                echo "nasheViaje Plus no disponible. \n";
                 return false;
             }
         }
+      }
     }
 
     public function setUltimoTiempo(){
@@ -75,3 +73,4 @@ class MedioBoleto extends Tarjeta {
 
 
 }
+?>

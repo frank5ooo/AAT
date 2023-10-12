@@ -3,7 +3,7 @@
 namespace TrabajoSube;
 
 class Tarjeta {
-    public $saldo;
+    private $saldo = 0;
     private $limite_saldo = 6600;
     private $precio = 120;
     public $viajePlus =0;
@@ -11,9 +11,10 @@ class Tarjeta {
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
 
-    public function __construct($saldo) 
+    protected $tiempo; 
+    public function __construct(TiempoInterface $tiempo) 
     {
-        $this->saldo = $saldo;
+        $this->tiempo = $tiempo;
     }
 
     public function recargar($monto) 
@@ -67,17 +68,16 @@ class Tarjeta {
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
-                $this->viajePlus ++;
+
 
                 return true;
             }
             else
             {   
-                if($this-> viajePlus<=2)
-                {
+                
                     echo "Viaje Plus no disponible. \n";
                     return false;
-                }
+                
             }
         }
     }
@@ -85,6 +85,4 @@ class Tarjeta {
       return $this->saldo;
     }
 }
-
-
-$tarjeta = new Tarjeta(200);
+?>
