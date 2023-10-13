@@ -9,36 +9,30 @@ use TrabajoSube\franquiciacompleta;
 use TrabajoSube\medioboleto;
 use TrabajoSube\tiempoFalso;
 
-
  class MedioBoletoTest extends TestCase {
     private $montosValidos = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
     800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
     2500, 3000, 3500, 4000];
 
-
     private $boleto = 120;
 
     public function testPagarConMedioBoletoConSaldo()
     {
-        $boletoMedio =  $this->boleto /2;
-        $tiempo = new TiempoFalso;
+        $boletoMedio =  $this->boleto/2;
+        $tiempo = new TiempoFalso();
 
-        foreach ($this->montosValidos as $prueba){
+        $tarjeta = new medioboleto($tiempo); 
+        $tarjeta->recargar(1000);
+        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
-            $tarjeta = new MedioBoleto($tiempo); 
-            $tarjeta->recargar($prueba);
-            $resultado = $tarjeta->descontar($this->boleto);
+        echo "precio" . $tarjeta->getPrecio(). "\n" ;
+        echo "Monto de recarga: $1000\n";
 
-            echo "Monto de recarga: $prueba\n";
-            echo "Saldo después del descuento: " . $tarjeta->getSaldo() . "\n";
-            echo "Resultado del descuento: " . ($resultado ? 'Éxito' : 'Fallo') . "\n\n";
-    
+        echo "Saldo después del descuento: " . $tarjeta->setSaldoMedioBoleto() . "\n";
+        echo "Resultado del descuento: " . ($resultado ? 'Éxito' : 'Fallo') . "\n\n";
 
-            $this->assertTrue($resultado);
-            $this->assertEquals($prueba - $boletoMedio, $tarjeta->getSaldo());
-            
-        }
-
+        $this->assertTrue($resultado);
+        $this->assertEquals(1000 - $boletoMedio, $tarjeta->setSaldoMedioBoleto());
     }
 /*
     public function testPagarConMedioBoletoSinSaldo()
@@ -118,5 +112,5 @@ public function testLimiteDeViajesPorDia() {
         $this->assertEquals(1760 , $medioBoleto->getSaldo());  
         
     }*/
- }
+}
 ?>

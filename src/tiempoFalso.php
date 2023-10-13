@@ -6,11 +6,10 @@ use TrabajoSube\tiempoInterface;
 
 class TiempoFalso implements TiempoInterface {
 
-    protected  $tiempo; 
+    protected $tiempo; 
 
-    public function __construct($inicio = 1 ){
+    public function __construct($inicio = 1){
         $this->tiempo = $inicio;
-
     }
     public function time(){
         return $this->tiempo; 

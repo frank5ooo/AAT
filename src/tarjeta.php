@@ -11,6 +11,7 @@ class Tarjeta {
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
 
+    // private $saldoPendiente = 0;
     protected $tiempo; 
     public function __construct(TiempoInterface $tiempo) 
     {
@@ -68,21 +69,21 @@ class Tarjeta {
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
-
-
                 return true;
             }
             else
             {   
-                
-                    echo "Viaje Plus no disponible. \n";
-                    return false;
-                
+                echo "Viaje Plus no disponible. \n";
+                return false;
             }
         }
     }
     public function getSaldo() {
       return $this->saldo;
+    }
+
+    public function getPrecio() {
+        return $this->precio;
     }
 }
 ?>
