@@ -67,6 +67,7 @@ class MedioBoleto extends Tarjeta {
                 if ($this->saldoMedioBoleto >= -151.84) 
                 {
                     $this->saldoMedioBoleto -= $precio;
+                    echo "\n El saldo ES" . $this->saldoMedioBoleto."\n" ;
                     echo "Viaje Plus utilizado.\n";
                     return true;
                 } 

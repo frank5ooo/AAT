@@ -40,8 +40,7 @@ class TarjetaTest extends TestCase {
 
     public function testDescontar()
     {
-            $tiempo = new TiempoFalso;
-
+        $tiempo = new TiempoFalso;
             
         foreach ($this->montosValidos as $prueba) 
         {
