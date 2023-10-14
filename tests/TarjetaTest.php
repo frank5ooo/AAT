@@ -16,7 +16,6 @@ class TarjetaTest extends TestCase {
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
 
-
     private $boleto = 120;
     public function testRecargar() 
     {
@@ -36,7 +35,6 @@ class TarjetaTest extends TestCase {
             }
         
     }
-
 
     public function testDescontar()
     {
@@ -106,8 +104,5 @@ class TarjetaTest extends TestCase {
         $this->assertEquals(6600, $tarjeta->getSaldo());
         $this->assertEquals(1280 , $tarjeta->saldoPendiente);
     } 
-
-
-
 }
 ?>

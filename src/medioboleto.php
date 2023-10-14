@@ -44,14 +44,13 @@ class MedioBoleto extends Tarjeta {
             if ($this->fechaActual->time() < 300) // Menos de 5 minutos
             { 
                 echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.". $this->fechaActual->time();
+                echo "tiempo" . $this->fechaActual->time();
                 return false;
             }
             // Aplicar descuento del 50%
 
             if ($this->saldoMedioBoleto >= $precioDescuento) 
             {
-                //echo "entra NASHE EN EL IF.\n";
-
                 $this->saldoMedioBoleto -= $precioDescuento;
                 $this->viajesHoy++;     
                 return true;
@@ -61,7 +60,6 @@ class MedioBoleto extends Tarjeta {
                 if ($this->saldoMedioBoleto >= -151.84) 
                 {
                     $this->saldoMedioBoleto -= $this->getPrecio();
-                    //echo "\n El saldo ES" . $this->saldoMedioBoleto."\n" ;
                     echo "Viaje Plus utilizado.\n";
                     return true;
                 } 
@@ -75,14 +73,10 @@ class MedioBoleto extends Tarjeta {
         }
     }
 
-    public function getUltimoTiempo()
-    {
-        $this->ultimaMarcaTiempo = null;
-    }
-
     public function getSaldoMedioBoleto()
     {
         return $this->saldoMedioBoleto;
     }
 }
+
 ?>

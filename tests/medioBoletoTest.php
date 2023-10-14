@@ -102,32 +102,37 @@ use TrabajoSube\tiempoFalso;
         $this->expectOutputString("Ha alcanzado el límite de 4 viajes con medio boleto hoy. Se le cobrará el precio completo.\n");
     }
     
-    // public function testSinPasarLimiteDeViajesPorDia() {
+    public function testViajandoEnMenosDe5Minutos() 
+    {
+        $tiempo = new TiempoFalso;
 
-    //     $tiempo = new TiempoFalso;
-    //     $tiempo->avanzar(300);
+        $tarjeta = new MedioBoleto($tiempo); 
+        $tarjeta->recargar(2000);
 
-    //     $tarjeta = new MedioBoleto($tiempo); 
-    //     $tarjeta->recargar(2000);
-        
-    //     // Simular 4 viajes en el mismo día
+        $tiempo->avanzar(300);
+        $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 1
 
-    //     $tiempo->avanzar(300);
-    //     //echo "viajes 1hoy". $tarjeta->viajesHoy;
-    //     $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 1
+        $tiempo->avanzar(-300);
+        $tiempo->avanzar(200);
+        $this->assertFalse($tarjeta->descontarMedioBoleto());    // Viaje 2 no se podra
 
-    //     //echo "viajes hoy2". $tarjeta->viajesHoy;
-    //     $tiempo->avanzar(300);
-    //     $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 2
+        $tiempo->avanzar(-200);
+        $tiempo->avanzar(500);
+        $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 3
 
-    //     //echo "viajes hoy3". $tarjeta->viajesHoy;
-    //     $tiempo->avanzar(300);
-    //     $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 3
-        
-    //     //echo "viajes hoy4". $tarjeta->viajesHoy;
-    //     $tiempo->avanzar(300);
-    //     $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 4
-        
-    // }
+        $tiempo->avanzar(-500);
+        $tiempo->avanzar(400);
+        $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 4
+
+        $tiempo->avanzar(-400);
+        $tiempo->avanzar(400);
+        $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 5
+
+        $tiempo->avanzar(-400);
+        $tiempo->avanzar(300);
+        $this->assertTrue($tarjeta->descontarMedioBoleto());    // Viaje 6
+        $this->assertEquals(2000 - $this->boleto, $tarjeta->getSaldoMedioBoleto());
+
+    }
 }
 ?>
