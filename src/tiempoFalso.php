@@ -8,7 +8,7 @@ class TiempoFalso implements TiempoInterface {
 
     protected $tiempo; 
 
-    public function __construct($inicio = 1){
+    public function __construct($inicio = 0){
         $this->tiempo = $inicio;
     }
     public function time(){
