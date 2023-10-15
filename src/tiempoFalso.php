@@ -35,7 +35,6 @@ class TiempoFalso implements TiempoInterface {
         return $this->dia;
     }
     
-
     public function GetHora()
     {
         return $this->hora;

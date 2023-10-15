@@ -3,8 +3,8 @@
 namespace TrabajoSube\Tests;
 
 use PHPUnit\Framework\TestCase;
-use TrabajoSube\franquiciacompleta;
-use TrabajoSube\TiempoFalso;
+use TrabajoSube\FranquiciaCompleta; 
+use TrabajoSube\tiempoFalso; 
 
 class franquiciaCompletaTest extends TestCase 
 {
@@ -13,11 +13,11 @@ class franquiciaCompletaTest extends TestCase
     public function testDescontarFranquiciaCompleta()
     { 
         $inicio = strtotime('today'); // Fecha y hora inicial
-        $tiempo = new TiempoFalso($inicio);
+        $tiempo = new tiempoFalso($inicio);
         $tarjeta = new franquiciacompleta($tiempo); 
         $tarjeta->recargar(600);
         
-        for($i=0;$i<5;$i++)
+        for($i=0; $i<5; $i++)
         {
             $tarjeta->descontarFranquiciaCompleta($this->boleto);
         }
@@ -27,7 +27,7 @@ class franquiciaCompletaTest extends TestCase
     public function testPagandoUltimoViaje()
     { 
         $inicio = strtotime('today'); // Fecha y hora inicial
-        $tiempo = new TiempoFalso($inicio);
+        $tiempo = new tiempoFalso($inicio);
         $tarjeta = new franquiciacompleta($tiempo); 
         $tarjeta->recargar(4000);
         
@@ -45,7 +45,7 @@ class franquiciaCompletaTest extends TestCase
 
     public function testViajesGratisDespuesDeUnNuevoDia() {
         $inicio = strtotime('today'); // Fecha y hora inicial
-        $tiempoFalso = new TiempoFalso($inicio);
+        $tiempoFalso = new tiempoFalso($inicio);
         $tarjeta = new FranquiciaCompleta($tiempoFalso);
         
         // Realizar dos viajes gratuitos en un día

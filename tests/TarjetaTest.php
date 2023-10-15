@@ -1,41 +1,42 @@
-<?php
+ <?php
 
-namespace TrabajoSube\Tests;
+// namespace TrabajoSube\Tests;
 
-use PHPUnit\Framework\TestCase;
-use TrabajoSube\tarjeta;
-use TrabajoSube\colectivo;
-use TrabajoSube\boleto;
-use TrabajoSube\franquiciacompleta;
-use TrabajoSube\medioboleto;
+// use PHPUnit\Framework\TestCase;
+// use TrabajoSube\tarjeta;
+// use TrabajoSube\colectivo;
+// use TrabajoSube\boleto;
+// use TrabajoSube\franquiciacompleta;
+// use TrabajoSube\medioboleto;
 
 
-class TarjetaTest extends TestCase {
-    private $montosValidos = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
-                800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
-                2500, 3000, 3500, 4000];
+// class TarjetaTest extends TestCase 
+// {
+//     private $montosValidos = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
+//                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
+//                 2500, 3000, 3500, 4000];
 
-    private $montosDePrueba = [-300,-120,-91.84, 1, 500, 1000,6600];
+//     private $montosDePrueba = [-300,-120,-91.84, 1, 500, 1000,6600];
 
-    private $boleto = 120;
-    // public function testRecargar() 
-    // {
-    //     foreach ($this->montosDePrueba as $prueba)
-    //     {
-    //         $tarjeta = new Tarjeta($prueba);
+//     private $boleto = 120;
+//     public function testRecargar() 
+//     {
+//         foreach ($this->montosDePrueba as $prueba)
+//         {
+//             $tarjeta = new Tarjeta($prueba);
         
-    //         foreach ($this->montosValidos as $monto) 
-    //         {        
-    //             $saldoInicial = $tarjeta->saldo;
+//             foreach ($this->montosValidos as $monto) 
+//             {        
+//                 $saldoInicial = $tarjeta->saldo;
         
-    //             $tarjeta->recargar($monto);
+//                 $tarjeta->recargar($monto);
         
-    //             $saldoEsperado = min($saldoInicial + $monto, 6600);
+//                 $saldoEsperado = min($saldoInicial + $monto, 6600);
         
-    //             $this->assertEquals($saldoEsperado, $tarjeta->saldo);
-    //         }
-    //     }
-    // }
+//                 $this->assertEquals($saldoEsperado, $tarjeta->saldo);
+//             }
+//         }
+//     }
 
     // public function testDescontarConSaldo()
     // {      
@@ -90,5 +91,5 @@ class TarjetaTest extends TestCase {
     //     $this->assertEquals(6600, $tarjeta->saldo);
     //     $this->assertEquals(400, $tarjeta->saldoPendiente);
     // }
-}
+//} 
 
