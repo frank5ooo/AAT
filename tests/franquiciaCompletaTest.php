@@ -9,10 +9,11 @@ use TrabajoSube\TiempoFalso;
 class franquiciaCompletaTest extends TestCase 
 {
     private $boleto = 120;
-    
+
     public function testDescontarFranquiciaCompleta()
     { 
-        $tiempo = new TiempoFalso;
+        $inicio = strtotime('today'); // Fecha y hora inicial
+        $tiempo = new TiempoFalso($inicio);
         $tarjeta = new franquiciacompleta($tiempo); 
         $tarjeta->recargar(600);
         
@@ -25,7 +26,8 @@ class franquiciaCompletaTest extends TestCase
 
     public function testPagandoUltimoViaje()
     { 
-        $tiempo = new TiempoFalso;
+        $inicio = strtotime('today'); // Fecha y hora inicial
+        $tiempo = new TiempoFalso($inicio);
         $tarjeta = new franquiciacompleta($tiempo); 
         $tarjeta->recargar(4000);
         
@@ -36,7 +38,6 @@ class franquiciaCompletaTest extends TestCase
         $this->assertEquals(True,$tarjeta->descontarFranquiciaCompleta($this->boleto));
         $this->assertEquals(4000, $tarjeta->getSaldo());
         $this->assertEquals(0, $tarjeta->getCantViajesGratis());
-
 
         $this->assertEquals(True,$tarjeta->descontarFranquiciaCompleta($this->boleto));
         $this->assertEquals(3880, $tarjeta->getSaldo());

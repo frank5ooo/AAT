@@ -10,7 +10,6 @@ class TiempoFalso implements TiempoInterface {
     protected $dia; 
     protected $hora; 
 
-
     public function __construct($inicio = 0){
         $this->tiempo = $inicio;
         $this->dia= date('l',$inicio);
