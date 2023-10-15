@@ -7,13 +7,15 @@ class Tarjeta {
     private $limite_saldo = 6600;
     private $precio = 120;
     public $viajePlus =0;
+
+    protected $tiempo;
     const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
 
-    public function __construct($saldo) 
+    public function __construct(TiempoInterface $tiempo) 
     {
-        $this->saldo = $saldo;
+        $this->tiempo = $tiempo;
     }
 
     public function recargar($monto) 
@@ -84,7 +86,8 @@ class Tarjeta {
     public function getSaldo() {
       return $this->saldo;
     }
+
+    public function getPrecio() {
+        return $this->precio;
+    }
 }
-
-
-$tarjeta = new Tarjeta(200);

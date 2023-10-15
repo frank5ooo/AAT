@@ -11,7 +11,6 @@ class MedioBoleto extends Tarjeta {
 
     public function __construct($saldo) {
         parent::__construct($saldo);
-        $this->ultimaMarcaTiempo = null;
         $this->viajesHoy = 0;
         $this->fechaActual = date("Y-m-d");
     }
@@ -71,7 +70,4 @@ class MedioBoleto extends Tarjeta {
     public function setUltimoTiempo(){
         $this->ultimaMarcaTiempo = null;
     }
-
-
-
 }
