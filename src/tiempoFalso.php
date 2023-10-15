@@ -11,13 +11,14 @@ class TiempoFalso implements TiempoInterface {
     public function __construct($inicio = 0){
         $this->tiempo = $inicio;
     }
+    public function avanzar($segs){
+        $this->tiempo+= $segs; 
+    }
     public function time(){
         return $this->tiempo; 
     }
 
-    public function avanzar($segs){
-        $this->tiempo+= $segs; 
-    }
+    
 }
 
 ?>
