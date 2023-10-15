@@ -3,7 +3,7 @@
 namespace TrabajoSube\Tests;
 
 use PHPUnit\Framework\TestCase;
-use TrabajoSube\FranquiciaCompleta; 
+use TrabajoSube\franquiciacompleta; 
 use TrabajoSube\tiempoFalso; 
 
 class franquiciaCompletaTest extends TestCase 
