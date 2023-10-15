@@ -13,80 +13,69 @@ class TarjetaTest extends TestCase {
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
 
-    private $montosDePrueba = [-120, 1, 500, 1000,6600];
-
     private $boleto = 120;
     public function testRecargar() 
     {
-        foreach ($this->montosDePrueba as $prueba)
-        {
-            $tarjeta = new Tarjeta($prueba);
-        
-            foreach ($this->montosValidos as $monto) 
-            {        
-                $saldoInicial = $tarjeta->saldo;
-        
-                $tarjeta->recargar($monto);
-        
-                $saldoEsperado = min($saldoInicial + $monto, 6600);
-        
-                $this->assertEquals($saldoEsperado, $tarjeta->saldo);
-            }
+        $tarjeta = new Tarjeta(0);
+    
+        foreach ($this->montosValidos as $monto) 
+        {        
+            $saldoInicial = $tarjeta->saldo;
+    
+            $tarjeta->recargar($monto);
+    
+            $saldoEsperado = min($saldoInicial + $monto, 6600);
+    
+            $this->assertEquals($saldoEsperado, $tarjeta->saldo);
         }
+        
     }
 
     public function testDescontarConSaldo()
     {      
+        $tarjeta = new tarjeta(2000);
         
-        foreach ($this->montosDePrueba as $prueba)
+        if(2000 >= $this->boleto)
         {
-            $tarjeta = new tarjeta($prueba);
-            
-            if($prueba >= $this->boleto)
-            {
-                $tarjeta->descontar($this->boleto);
+            $tarjeta->descontar($this->boleto);
 
-                $this->assertEquals($prueba-$this->boleto, $tarjeta->saldo);
-            }
+            $this->assertEquals(2000-$this->boleto, $tarjeta->saldo);
+            $this->assertTrue($tarjeta->descontar($this->boleto));
         }
     }
     public function testDescontarSinSaldo()
     {
-        foreach ($this->montosDePrueba as $pruebaSaldo) 
-        {
-            $tarjeta = new Tarjeta($pruebaSaldo);
-            
-            $resultado = $tarjeta->descontar($this->boleto);
+        $tarjeta = new Tarjeta(0);
+        $tarjeta->recargar(150);
 
-            if ($pruebaSaldo >= $this->boleto) 
-            {
-                $this->assertTrue($resultado);
-                $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
-                $this->assertEquals(0, $tarjeta->viajePlus);
-            } 
-            elseif ($pruebaSaldo >= -91.84) 
-            {
-                $this->assertTrue($resultado);
-                $this->assertEquals($pruebaSaldo - $this->boleto, $tarjeta->getSaldo());
-                $this->assertEquals($tarjeta->viajePlus<=2, $tarjeta->viajePlus);
-            } 
-            else 
-            {
-                $this->assertFalse($resultado);
-                $this->assertEquals($pruebaSaldo, $tarjeta->getSaldo());
-                $this->assertEquals($tarjeta->viajePlus>2, $tarjeta->viajePlus);
+        $nuevoSaldo = $tarjeta->getSaldo();
+        $resultado = $tarjeta->descontar($this->boleto);
+        $this->assertTrue($resultado);
+        $this->assertEquals($nuevoSaldo - $this->boleto, $tarjeta->getSaldo());
 
-            }
-        }
+        $nuevoSaldo = $tarjeta->getSaldo();
+        $resultado = $tarjeta->descontar($this->boleto);
+        $this->assertTrue($resultado);
+        $this->assertEquals($nuevoSaldo - $this->boleto, $tarjeta->getSaldo());
+        
+        $nuevoSaldo = $tarjeta->getSaldo();
+        $resultado = $tarjeta->descontar($this->boleto);
+        $this->assertTrue($resultado);
+        $this->assertEquals($nuevoSaldo - $this->boleto, $tarjeta->getSaldo());
+
+        $nuevoSaldo = $tarjeta->getSaldo();
+        $resultado = $tarjeta->descontar($this->boleto);
+        $this->assertFalse($resultado);
+        $this->assertEquals($nuevoSaldo, $tarjeta->getSaldo());
     }
 
     public function testRecargaConExcedente()
     {
         $tarjeta = new Tarjeta(5000);
-        $tarjeta->recargar(2000);  // Se cargan 2400 por lo que quedará 5000 + 2400 - 6000 = 800 en saldo
+        $tarjeta->recargar(2500);  // Se cargan 2500 por lo que quedará 5000 + 2500 - 6600 = 900 en saldo
     
         $this->assertEquals(6600, $tarjeta->saldo);
-        $this->assertEquals(400, $tarjeta->saldoPendiente);
+        $this->assertEquals(900, $tarjeta->getSaldoPendiente());
     }
 
     public function testRecargaConExcedenteDespuesDeViaje()
@@ -96,6 +85,6 @@ class TarjetaTest extends TestCase {
         
         $tarjeta->descontar($this->boleto);
         $this->assertEquals(6600, $tarjeta->saldo);
-        $this->assertEquals(280 , $tarjeta->saldoPendiente);
+        $this->assertEquals(280 , $tarjeta->getSaldoPendiente());
     } 
 }

@@ -6,10 +6,11 @@ class Tarjeta {
     public $saldo;
     private $limite_saldo = 6600;
     private $precio = 120;
-    public $viajePlus =0;
     const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
+
+    private $saldoPendiente = 0;
 
     public function __construct($saldo) 
     {
@@ -27,7 +28,7 @@ class Tarjeta {
                 $saldoPendiente = $this->saldo - $this->limite_saldo;
                 $this->saldo = $this->limite_saldo;
                 $this->saldoPendiente = $saldoPendiente;
-            }
+            }   
         }
         else
         {
@@ -35,7 +36,7 @@ class Tarjeta {
         }
     }
 
-    public function recargarPendiente($monto)                //esta funcion es para que no se fije si el monto de recarga es valido en el caso de ser saldo pendiente
+    public function recargarPendiente($monto) //esta funcion es para que no se fije si el monto de recarga es valido en el caso de ser saldo pendiente
     {
         $this->saldo += $monto;
 
@@ -50,13 +51,12 @@ class Tarjeta {
     public function descontar($precio) 
     {
         if ($this->saldo >= $precio)
-        {            
+        {
             $this->saldo -= $precio;
 
             if(isset($this->saldoPendiente) && $this->saldoPendiente > 0)
             {
                 $this->recargarPendiente($this->saldoPendiente);
-
             }
 
             return true;
@@ -67,22 +67,24 @@ class Tarjeta {
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
-                $this->viajePlus ++;
-
                 return true;
             }
             else
-            {   
-                if($this-> viajePlus<=2)
-                {
-                    echo "Viaje Plus no disponible. \n";
-                    return false;
-                }
+            {  
+                echo "Viaje Plus no disponible. \n";
+                return false;
             }
         }
     }
-    public function getSaldo() {
+
+    public function getSaldo() 
+    {
       return $this->saldo;
+    }
+
+    public function getSaldoPendiente() 
+    {
+      return $this->saldoPendiente;
     }
 }
 
