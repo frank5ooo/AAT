@@ -88,3 +88,5 @@ class Tarjeta {
     }
 }
 
+
+$tarjeta = new Tarjeta(200);

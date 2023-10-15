@@ -4,9 +4,6 @@ namespace TrabajoSube\Tests;
 
 use PHPUnit\Framework\TestCase;
 use TrabajoSube\tarjeta;
-use TrabajoSube\colectivo;
-use TrabajoSube\boleto;
-
 
 class TarjetaTest extends TestCase {
     private $montosValidos = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
