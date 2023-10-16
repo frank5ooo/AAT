@@ -103,7 +103,6 @@ class TarjetaTest extends TestCase {
         //$this->assertEquals(1280 , $tarjeta->saldoPendiente);
     } 
 
-
     public function testUnViaje()
     {
         $tiempo = new TiempoFalso;
@@ -150,5 +149,32 @@ class TarjetaTest extends TestCase {
         $this->assertEquals(90, $tarjeta->getPrecio());
     }
 
+    public function testCambioDeMes()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1,$tiempo);
+        $tarjeta->recargar(40000);
+        
+        for($i=0; $i<40; $i++)
+        {
+            $tarjeta->descontar($this->boleto);
+        }
+        // echo"\nViajesTestt:".$tarjeta->getCantViajesEnElMes();
+        // echo"\nprecioTestt:".$tarjeta->getPrecio();
+        $this->assertEquals(40, $tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(96, $tarjeta->getPrecio());
+        $this->assertEquals(date('m', $tiempo->time()), $tarjeta->getMesActual());
+        //echo "mes". date('m', $tiempo->time());
+
+        $tiempo->avanzar(32*86400);
+
+        $tarjeta->descontar($this->boleto);
+        //echo "\nPRECIOOOOO".  $tarjeta->getPrecio();
+
+        $this->assertEquals(1, $tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(date('m', $tiempo->time()), $tarjeta->getMesActual());
+
+        $this->assertEquals(120, $tarjeta->getPrecio());
+    }
 }
 ?>

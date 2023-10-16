@@ -15,7 +15,7 @@ class Tarjeta
     protected $tiempo;
     protected $id;
     protected $tipo;
-    protected $mesActual;
+    protected $mesActual=0;
     public function __construct($id,TiempoInterface $tiempo) 
     {
         $this->tiempo = $tiempo;
@@ -59,7 +59,7 @@ class Tarjeta
             $saldoPendiente = $saldofake - $this->limite_saldo;
             $this->saldo = $this->limite_saldo;
             $this->saldoPendiente = $saldoPendiente;
-            echo"\nsaldo11  ".$this->saldo;
+            //echo"\nsaldo11  ".$this->saldo;
         }
     }
 
@@ -67,43 +67,39 @@ class Tarjeta
     {
         $mesActual = date('m', $this->tiempo->time());
 
-        if ($this->mesActual < $mesActual) 
+        if ($this->mesActual < date('m', $this->tiempo->time())) 
         {
             $this->mesActual = $mesActual;
             $this->cantViajesEnElMes = 0;
         }
-
+        
         if($this->cantViajesEnElMes<=29)
         {
-            $this->precio;
-            //echo"\nprecioCompleto".$this->precio;
-            
+            $this->precio = 120;
         }
-        elseif($this->cantViajesEnElMes>=30 && $this->cantViajesEnElMes<=79)
+        if($this->cantViajesEnElMes>=30 && $this->cantViajesEnElMes<=79)
         {
             $this->precio= 96;
-            //echo"\nprecio0.20 ".$this->precio;
         }
-        elseif ($this->cantViajesEnElMes<=80)
+        elseif ($this->cantViajesEnElMes>=80)
         {
             $this->precio = 90;
-            //echo"\nprecio0.25 ".$this->precio;
         }
+
+//        echo"\ncantViajesEnElMes: ". $this->cantViajesEnElMes;
 
         if ($this->saldo >= $precio)
         {
-            
+            $this->mesActual= $mesActual;
             $this->cantViajesEnElMes++;
             $this->saldo -= $precio;
             if($this->saldoPendiente>0)
             {
                 $this->recargarPendiente($this->saldoPendiente);
-    
             }
-            echo"saldoFinal".$this->saldo;
+            //echo"saldoFinal".$this->saldo;
             return true;
         }
-
         else
         {
             if($this->saldo >= -91.84)  //-91.84 ya que en caso de tener un saldo igual o mayor a este al descontarle los 120 quedaria un saldo igual o mayor a -211.84 
