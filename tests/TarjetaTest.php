@@ -85,7 +85,8 @@ class TarjetaTest extends TestCase {
         $tarjeta = new Tarjeta(1,$tiempo);
         $tarjeta->recargar(4000);  
         $tarjeta->recargar(4000);  
-    
+        
+        //echo"saldo". $tarjeta->getSaldo();
         $this->assertEquals(6600, $tarjeta->getSaldo());
        // $this->assertEquals(1400, $tarjeta->saldoPendiente);
     }
@@ -101,5 +102,79 @@ class TarjetaTest extends TestCase {
         $this->assertEquals(6600, $tarjeta->getSaldo());
         //$this->assertEquals(1280 , $tarjeta->saldoPendiente);
     } 
+
+    public function testUnViaje()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1,$tiempo);
+        $tarjeta->recargar(4000);
+        
+        $tarjeta->descontar($this->boleto);
+
+        $this->assertEquals(1,$tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(date('m', $tiempo->time()),$tarjeta->getMesActual());
+    }
+
+    public function testViajeDescuento20PorCiento()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1,$tiempo);
+        $tarjeta->recargar(4000);
+        
+        for($i=0; $i<31; $i++)
+        {
+            $tarjeta->descontar($this->boleto);
+        }
+        // echo"\nprecioTestt:".$tarjeta->getCantViajesEnElMes();
+        // echo"\nprecioTestt:".$tarjeta->getPrecio();
+
+        $this->assertEquals(31, $tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(96, $tarjeta->getPrecio());
+    }
+
+    public function testViajeDescuento25PorCiento()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1,$tiempo);
+        $tarjeta->recargar(40000);
+        
+        for($i=0; $i<90; $i++)
+        {
+            $tarjeta->descontar($this->boleto);
+        }
+        // echo"\nViajesTestt:".$tarjeta->getCantViajesEnElMes();
+        // echo"\nprecioTestt:".$tarjeta->getPrecio();
+
+        $this->assertEquals(90, $tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(90, $tarjeta->getPrecio());
+    }
+
+    public function testCambioDeMes()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1,$tiempo);
+        $tarjeta->recargar(40000);
+        
+        for($i=0; $i<40; $i++)
+        {
+            $tarjeta->descontar($this->boleto);
+        }
+        // echo"\nViajesTestt:".$tarjeta->getCantViajesEnElMes();
+        // echo"\nprecioTestt:".$tarjeta->getPrecio();
+        $this->assertEquals(40, $tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(96, $tarjeta->getPrecio());
+        $this->assertEquals(date('m', $tiempo->time()), $tarjeta->getMesActual());
+        //echo "mes". date('m', $tiempo->time());
+
+        $tiempo->avanzar(32*86400);
+
+        $tarjeta->descontar($this->boleto);
+        //echo "\nPRECIOOOOO".  $tarjeta->getPrecio();
+
+        $this->assertEquals(1, $tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(date('m', $tiempo->time()), $tarjeta->getMesActual());
+
+        $this->assertEquals(120, $tarjeta->getPrecio());
+    }
 }
 ?>

@@ -6,13 +6,13 @@ use TrabajoSube\tiempoInterface;
 
 class TiempoFalso implements TiempoInterface
 {
-    protected $tiempo; 
+    protected $tiempo;
 
     public function __construct($inicio = 0)
     {
         $this->tiempo = $inicio;
     }
-    public function avanzar($segs =0 )
+    public function avanzar($segs = 0)
     { 
         $this->tiempo += $segs; 
     }
@@ -20,6 +20,7 @@ class TiempoFalso implements TiempoInterface
     {
         return $this->tiempo; 
     }
+
 }
 
 ?>

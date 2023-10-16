@@ -123,7 +123,7 @@ use TrabajoSube\tiempoFalso;
         $this->assertEquals(1940,$tarjeta->getSaldo());
 
         $tiempo->avanzar(200);
-       // echo "toempo2" . $tiempo->time();
+        echo "toempo2" . $tiempo->time();
         $this->assertFalse($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 2 se podra
         $this->assertEquals(1940,$tarjeta->getSaldo());
     }
