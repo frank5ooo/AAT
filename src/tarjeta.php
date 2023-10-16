@@ -30,10 +30,14 @@ class Tarjeta
         if (in_array($monto, self::cargasAceptadas) && $saldofake < $this->limite_saldo) 
         {
             $this->saldo += $monto;
+        }
+        else
+        {   
+            if ($saldofake > $this->limite_saldo) 
+            {   
+                //echo"\nSALDOofakerecarga". $saldofake;
 
-            if ($this->saldo > $this->limite_saldo) 
-            {
-                $saldoPendiente = $this->saldo - $this->limite_saldo;
+                $saldoPendiente = $saldofake - $this->limite_saldo;
                 $this->saldo = $this->limite_saldo;
                 $this->saldoPendiente = $saldoPendiente;
                 // echo"\nsaldoPendienterecarga".$this->saldoPendiente;
