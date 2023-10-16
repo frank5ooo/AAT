@@ -2,18 +2,24 @@
 
 namespace TrabajoSube;
 
-class Tarjeta {
-    public $saldo;
+class Tarjeta 
+{
+    protected $saldo = 0;
     private $limite_saldo = 6600;
-    private $precio = 120;
-    public $viajePlus =0;
+    protected $precio = 120;
     const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
 
-    public function __construct($saldo) 
+    protected $saldoPendiente = 0;
+    protected $tiempo;
+    protected $id;
+    protected $tipo;
+
+    public function __construct($id,TiempoInterface $tiempo) 
     {
-        $this->saldo = $saldo;
+        $this->tiempo = $tiempo;
+        $this->id = $id;
     }
 
     public function recargar($monto) 
@@ -48,7 +54,7 @@ class Tarjeta {
     }
 
     public function descontar($precio) 
-    {
+    {           
         if ($this->saldo >= $precio)
         {            
             $this->saldo -= $precio;
@@ -56,35 +62,44 @@ class Tarjeta {
             if(isset($this->saldoPendiente) && $this->saldoPendiente > 0)
             {
                 $this->recargarPendiente($this->saldoPendiente);
-
             }
-
             return true;
         }
         else
         {
-            if($this->saldo >= -91.84)  //-91.84 ya que en caso de tener un saldo igual o mayor a este al descontarle los 120 quedaria un saldo igual o mayor a -211.84 
+            if($this->saldo >= -91.84)
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
-                $this->viajePlus ++;
-
                 return true;
             }
             else
             {   
-                if($this-> viajePlus<=2)
-                {
-                    echo "Viaje Plus no disponible. \n";
-                    return false;
-                }
+                echo "Viaje Plus no disponible. \n";
+                return false;
             }
         }
     }
-    public function getSaldo() {
+
+    public function getSaldo() 
+    {
       return $this->saldo;
     }
+
+    public function getPrecio() 
+    {
+        return $this->precio;
+    }
+
+    public function getID() 
+    {   
+        return $this->id;
+    }
+
+    public function getTipo()
+    {   
+        echo "\n get tipo". $this->tipo;
+        return $this->tipo;
+    }
 }
-
-
-$tarjeta = new Tarjeta(200);
+?>

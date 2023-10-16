@@ -9,12 +9,6 @@ class MedioBoleto extends Tarjeta {
     private $viajesHoy;
     private $fechaActual;
 
-    public function __construct($saldo) {
-        parent::__construct($saldo);
-        $this->ultimaMarcaTiempo = null;
-        $this->viajesHoy = 0;
-        $this->fechaActual = date("Y-m-d");
-    }
 
     public function descontar($precio) {
        
