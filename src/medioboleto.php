@@ -5,63 +5,62 @@ namespace TrabajoSube;
 use TrabajoSube\tarjeta;
 
 class MedioBoleto extends Tarjeta {
-    private $ultimaMarcaTiempo;
-    private $viajesHoy;
-    private $fechaActual;
+    protected $viajesHoy = 0;
+    protected $cantViajesMedioBoleto=4;
+    private $medioBoleto;
 
-    public function descontar($precio) {
-       
-        $fechaNueva = date("Y-m-d");
-        if ($fechaNueva != $this->fechaActual) {
-            $this->viajesHoy = 0;
-            $this->fechaActual = $fechaNueva;
+    public function descontarMedioBoleto($boleto) 
+    {   
+        //$medioBoleto = $boleto/2;
+        $tiempoActual = $this->tiempo->time();
+        $medioBoleto = $this->precio/2;
+
+        if(intval($this->viajesHoy/86400) < intval($this->tiempo->time()/86400))
+        {
+            $this->cantViajesMedioBoleto=4;
         }
 
-      
-        if ($this->viajesHoy >= 4) {
-          
-            if ($this->saldo >= $precio) {
-                $this->saldo -= $precio;
-                echo "Ha alcanzado el límite de 4 viajes con medio boleto hoy. Se le cobrará el precio completo.\n";
-                return true;
-            }  if ($this->saldo >= -151.84) {
-                $this->saldo -= $precio;
-                echo "Ha alcanzado el límite de 4 viajes con medio boleto hoy, se utilizará un viaje plus.\n";
-                return true;
-            } else {
-                echo "Ha alcanzado el límite de 4 viajes con medio boleto hoy y no tiene saldo suficiente.\n";
+        if($this->cantViajesMedioBoleto > 0)
+        {   
+            if ($tiempoActual < 300) // Menos de 5 minutos
+            { 
+                echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.". $tiempoActual;
+                
                 return false;
             }
-        }
-
-        // Verificar el tiempo entre viajes
-        $marcaActual = time();
-
-        if ($this->ultimaMarcaTiempo !== null && ($marcaActual - $this->ultimaMarcaTiempo) < 300) { // Menos de 5 minutos
-            echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.\n";
-            return false;
-        }
-        // Aplicar descuento del 50%
-        $precioDescuento = $precio / 2;
-
-        if ($this->saldo >= $precioDescuento) {
-            $this->saldo -= $precioDescuento;
-            $this->ultimaMarcaTiempo = $marcaActual;
-            $this->viajesHoy++;
-            return true;
-        } else {
-            if ($this->saldo >= -151.84) {
-                $this->saldo -= $precio;
-                echo "Viaje Plus utilizado.\n";
+            // // Aplicar descuento del 50%
+            if ($this->saldo >= $medioBoleto) 
+            {   
+                $this->cantViajesMedioBoleto--;
+                $this->saldo -= $medioBoleto;
+                $this->viajesHoy = $tiempoActual;
                 return true;
-            } else {
-                echo "Viaje Plus no disponible. \n";
-                return false;
+            } 
+            else 
+            {
+                if ($this->saldo >= -151.84) 
+                {   
+                    echo "this->saldo\n". $this->saldo;
+                    $this->saldo-= $this->precio;
+                    echo "Viaje Plus utilizado.\n";
+                    return true;
+                } 
+                else 
+                {
+                    echo "nasheViaje Plus no disponible. \n";
+                    echo "El saldo ES" . $this->saldo."\n" ;
+                    return false;
+                }
             }
+        }
+        else{
+            return $this->descontar($boleto);
         }
     }
-
-    public function setUltimoTiempo(){
-        $this->ultimaMarcaTiempo = null;
+    public function GetCantViajesMedioBoleto()
+    {
+        return $this->cantViajesMedioBoleto;
     }
 }
+
+?>
