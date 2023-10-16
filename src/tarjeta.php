@@ -37,7 +37,7 @@ class Tarjeta
         }
         else
         {
-            echo ("Monto de recarga no válido: $monto");
+           // echo ("Monto de recarga no válido: $monto");
         }
     }
 
