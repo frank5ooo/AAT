@@ -7,7 +7,6 @@ use TrabajoSube\tiempoInterface;
 class TiempoFalso implements TiempoInterface
 {
     protected $tiempo;
-    protected $mes;
 
     public function __construct($inicio = 0)
     {
@@ -22,10 +21,7 @@ class TiempoFalso implements TiempoInterface
     {
         return $this->tiempo; 
     }
-    public function getMes()
-    {
-        return $this->mes;
-    }
+
 }
 
 ?>
