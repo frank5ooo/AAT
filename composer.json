@@ -1,4 +1,3 @@
-
 {
     "name": "phpunit/trabajosube",
     "description": "Trabajo practico AAT",
@@ -12,7 +11,7 @@
         "phpunit/phpunit": "^10.3"
     },
     "scripts": {   		
-        "test" : "./vendor/bin/phpunit --coverage-text"		
+    "test" : "./vendor/bin/phpunit --coverage-text"		
     }
 
 }
