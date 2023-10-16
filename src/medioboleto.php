@@ -29,9 +29,8 @@ class MedioBoleto extends Tarjeta {
         if($diaSemana !== "Sunday" && $diaSemana !== "Saturday" && $horaDia >=6 && $horaDia <=22)
         {
             if(($this->tiempoActual % 300) >= 1 && $this->tiempoActual > 0 ) // Menos de 5 minutos
-            {   
-
-                echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.". $this->tiempoActual;
+            {
+                echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.";
                 return false;
             }
             if($this->cantViajesMedioBoleto > 0)
