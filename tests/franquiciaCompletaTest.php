@@ -16,7 +16,8 @@ class franquiciaCompletaTest extends TestCase
         $tiempo = new tiempoFalso($inicio);
         $tarjeta = new franquiciacompleta(1,$tiempo); 
         $tarjeta->recargar(600);
-        
+        $tiempo->avanzar(3600*7);
+
         for($i=0; $i<5; $i++)
         {
             $tarjeta->descontarFranquiciaCompleta($this->boleto);
@@ -30,7 +31,8 @@ class franquiciaCompletaTest extends TestCase
         $tiempo = new tiempoFalso($inicio);
         $tarjeta = new franquiciacompleta(1,$tiempo); 
         $tarjeta->recargar(4000);
-        
+        $tiempo->avanzar(3600*7);
+
         $this->assertEquals(True,$tarjeta->descontarFranquiciaCompleta($this->boleto));
         $this->assertEquals(4000, $tarjeta->getSaldo());
         $this->assertEquals(1, $tarjeta->getCantViajesGratis());
@@ -43,11 +45,13 @@ class franquiciaCompletaTest extends TestCase
         $this->assertEquals(3880, $tarjeta->getSaldo());
     }
 
-    public function testViajesGratisDespuesDeUnNuevoDia() {
+    public function testViajesGratisDespuesDeUnNuevoDia() 
+    {
         $inicio = strtotime('today'); // Fecha y hora inicial
         $tiempo = new tiempoFalso($inicio);
         $tarjeta = new franquiciacompleta(1,$tiempo); 
-        
+        $tiempo->avanzar(3600*7);
+
         // Realizar dos viajes gratuitos en un día
         $this->assertTrue($tarjeta->descontarFranquiciaCompleta(0)); // Primer viaje gratis
         $this->assertTrue($tarjeta->descontarFranquiciaCompleta(0)); // Segundo viaje gratis
@@ -58,6 +62,25 @@ class franquiciaCompletaTest extends TestCase
 
         // Realizar un viaje en el nuevo día (debe ser gratis nuevamente)
         $this->assertTrue($tarjeta->descontarFranquiciaCompleta(0)); // Tercer viaje gratis
+    }
+
+    public function testViajar23Horas()
+    {
+        $tiempo = new TiempoFalso;
+
+        $tarjeta = new franquiciacompleta(1,$tiempo); 
+        $tarjeta->recargar(2000);
+        $tiempo->avanzar(3600*7);
+
+        $this->assertTrue($tarjeta->descontarFranquiciaCompleta($this->boleto));    // Viaje 1
+        $this->assertEquals(1, $tarjeta->getCantViajesGratis());
+        $this->assertEquals(2000, $tarjeta->getSaldo());
+        $tiempo->avanzar(3600*16);
+
+        $this->assertTrue($tarjeta->descontarFranquiciaCompleta($this->boleto));    // Viaje 1
+        $this->assertEquals(2000- $this->boleto, $tarjeta->getSaldo());
+        $this->assertTrue($tarjeta->descontarFranquiciaCompleta($this->boleto));    // Viaje 1
+        $this->assertEquals(1, $tarjeta->getCantViajesGratis());
     }
 }
 

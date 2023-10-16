@@ -14,8 +14,7 @@ class TiempoFalso implements TiempoInterface
     }
     public function avanzar($segs = 0)
     { 
-        $this->tiempo = $segs; 
-        $this->mes = date('m', $this->tiempo);
+        $this->tiempo += $segs; 
     }
     public function time()
     {
