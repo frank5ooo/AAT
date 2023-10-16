@@ -108,14 +108,14 @@ use TrabajoSube\tiempoFalso;
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(2000);
 
-        echo "toempo" .$tiempo->time();
+        //echo "toempo" .$tiempo->time();
 
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1 no se podra
         $this->assertEquals(1940,$tarjeta->getSaldo());
 
 
         $tiempo->avanzar(200);
-        echo "toempo2" . $tiempo->time();
+        //echo "toempo2" . $tiempo->time();
         $this->assertFalse($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 2 se podra
         $this->assertEquals(1940,$tarjeta->getSaldo());
     }
