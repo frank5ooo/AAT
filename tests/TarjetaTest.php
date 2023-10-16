@@ -101,5 +101,19 @@ class TarjetaTest extends TestCase {
         $this->assertEquals(6600, $tarjeta->getSaldo());
         //$this->assertEquals(1280 , $tarjeta->saldoPendiente);
     } 
+
+
+    public function testUnViaje()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1,$tiempo);
+        $tarjeta->recargar(4000);
+        
+        $tarjeta->descontar($this->boleto);
+
+        $this->assertEquals(1,$tarjeta->getCantViajesEnElMes());
+        $this->assertEquals(date('m', $tiempo->time()),$tarjeta->getMesActual());
+    }
+
 }
 ?>

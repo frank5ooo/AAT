@@ -7,7 +7,7 @@ class Tarjeta
     protected $saldo = 0;
     private $limite_saldo = 6600;
     protected $precio = 120;
-
+    protected $cantViajesEnElMes;    
     const cargasAceptadas = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                             800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                             2500, 3000, 3500, 4000];
@@ -15,14 +15,14 @@ class Tarjeta
     protected $tiempo;
     protected $id;
     protected $tipo;
-    
+    protected $mesActual;
     public function __construct($id,TiempoInterface $tiempo) 
     {
         $this->tiempo = $tiempo;
         $this->id = $id;
     }
 
-   public function recargar($monto) 
+    public function recargar($monto) 
     {
         if (in_array($monto, self::cargasAceptadas)) 
         {
@@ -43,9 +43,7 @@ class Tarjeta
 
     public function recargarPendiente($monto) //esta funcion es para que no se fije si el monto de recarga es valido en el caso de ser saldo pendiente
     {
-        $this->saldo += $monto;
-
-        if ($this->saldo > $this->limite_saldo)
+        if ($this->saldo += $monto > $this->limite_saldo)
         {
             $saldoPendiente = $this->saldo - $this->limite_saldo;
             $this->saldo = $this->limite_saldo;
@@ -55,8 +53,17 @@ class Tarjeta
 
     public function descontar($precio) 
     {
+        $mesActual = date('m', $this->tiempo->time());
+
+        if ($this->mesActual < $mesActual) 
+        {
+            $this->mesActual = $mesActual;
+            $this->cantViajesEnElMes = 0;
+        }
+
         if ($this->saldo >= $precio)
         {
+            $this->cantViajesEnElMes++;
             $this->saldo -= $precio;
 
             if(isset($this->saldoPendiente) && $this->saldoPendiente > 0)
@@ -71,6 +78,7 @@ class Tarjeta
             if($this->saldo >= -91.84)  //-91.84 ya que en caso de tener un saldo igual o mayor a este al descontarle los 120 quedaria un saldo igual o mayor a -211.84 
             {
                 $this->saldo -= $precio;
+                $this->cantViajesEnElMes++;
                 echo "Viaje Plus utilizado";
                 return true;
             }
@@ -80,6 +88,8 @@ class Tarjeta
                 return false;
             }
         }
+
+        // $this->cantViajesEnElMes++;
     }
 
     public function getSaldo() 
@@ -90,16 +100,22 @@ class Tarjeta
     {
         return $this->precio;
     }
-
     public function getID() 
     {   
         return $this->id;
     }
-
     public function getTipo()
     {   
-        echo "\n get tipo". $this->tipo;
         return $this->tipo;
+    }
+    public function getCantViajesEnElMes()
+    {
+        return $this->cantViajesEnElMes;
+    }
+
+    public function getMesActual()
+    {
+        return $this->mesActual;
     }
 }
 
