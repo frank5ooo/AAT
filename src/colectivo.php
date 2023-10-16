@@ -13,14 +13,7 @@ class Colectivo {
     public function pagarCon($tarjeta) {
         if($tarjeta->descontar($this->precio))
         {
-            $precioMostrado = $this->precio; // Precio real por defecto
-            if ($tarjeta instanceof MedioBoleto) {
-                $precioMostrado = $this->precio / 2; // Precio mostrado para MedioBoleto
-            } elseif ($tarjeta instanceof FranquiciaCompleta) {
-                $precioMostrado = 0; // Precio mostrado para FranquiciaCompleta
-            }
-
-            return new Boleto($this->linea, $this->precio, $precioMostrado);
+            return new Boleto($this->linea, $this->precio,);
         } 
         
     }

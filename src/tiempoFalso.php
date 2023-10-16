@@ -4,21 +4,22 @@ namespace TrabajoSube;
 
 use TrabajoSube\tiempoInterface;
 
-class TiempoFalso implements TiempoInterface {
-
+class TiempoFalso implements TiempoInterface
+{
     protected $tiempo; 
 
-    public function __construct($inicio = 0){
+    public function __construct($inicio = 0)
+    {
         $this->tiempo = $inicio;
     }
-    public function avanzar($segs){
-        $this->tiempo+= $segs; 
+    public function avanzar($segs =0 )
+    { 
+        $this->tiempo = $segs; 
     }
-    public function time(){
+    public function time()
+    {
         return $this->tiempo; 
     }
-
-    
 }
 
 ?>

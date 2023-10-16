@@ -8,49 +8,35 @@ class MedioBoleto extends Tarjeta {
     protected $viajesHoy = 0;
     protected $cantViajesMedioBoleto=4;
     private $medioBoleto;
-
+    private $tiempoActual = 0;
     public function descontarMedioBoleto($boleto) 
     {   
-        //$medioBoleto = $boleto/2;
-        $tiempoActual = $this->tiempo->time();
-        $medioBoleto = $this->precio/2;
+        $medioBoleto = $boleto/2;
+        $this->tiempoActual = $this->tiempo->time();
 
         if(intval($this->viajesHoy/86400) < intval($this->tiempo->time()/86400))
         {
             $this->cantViajesMedioBoleto=4;
         }
 
+        if($this->tiempoActual < 300 &&$this->tiempoActual >0) // Menos de 5 minutos
+        { 
+            echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.". $this->tiempoActual;
+            return false;
+        }
         if($this->cantViajesMedioBoleto > 0)
         {   
-            if ($tiempoActual < 300) // Menos de 5 minutos
-            { 
-                echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.". $tiempoActual;
-                
-                return false;
-            }
             // // Aplicar descuento del 50%
             if ($this->saldo >= $medioBoleto) 
             {   
                 $this->cantViajesMedioBoleto--;
                 $this->saldo -= $medioBoleto;
-                $this->viajesHoy = $tiempoActual;
+                $this->viajesHoy = $this->tiempoActual;
                 return true;
             } 
             else 
             {
-                if ($this->saldo >= -151.84) 
-                {   
-                    echo "this->saldo\n". $this->saldo;
-                    $this->saldo-= $this->precio;
-                    echo "Viaje Plus utilizado.\n";
-                    return true;
-                } 
-                else 
-                {
-                    echo "nasheViaje Plus no disponible. \n";
-                    echo "El saldo ES" . $this->saldo."\n" ;
-                    return false;
-                }
+                return $this->descontar($boleto);
             }
         }
         else{

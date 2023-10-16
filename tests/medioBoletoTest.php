@@ -23,7 +23,7 @@ use TrabajoSube\tiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(1000);
-        $tiempo->avanzar(300);
+
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
         echo "precio" . $tarjeta->getPrecio(). "\n";
@@ -38,12 +38,11 @@ use TrabajoSube\tiempoFalso;
 
     public function testPagarConMedioBoletoSinSaldo()
     {
-        $boletoMedio =  $this->boleto/2;
         $tiempo = new TiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(0);
-        $tiempo->avanzar(300);
+        //$tiempo->avanzar(300);
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
         echo "Saldo::" . $tarjeta->getSaldo() . "\n";
@@ -51,23 +50,20 @@ use TrabajoSube\tiempoFalso;
 
         $this->assertTrue($resultado);
         $this->assertEquals(0 - ($this->boleto), $tarjeta->getSaldo());
-        
     }
 
     public function testNoPagarConMedioBoletoSinSaldo()
     {
-        $boletoMedio =  $this->boleto/2;
         $tiempo = new TiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(0);
-        $tiempo->avanzar(300);
+
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
-        $this->assertFalse($resultado);
-       
+        $this->assertFalse($resultado);  
     }
 
     public function testLimiteDeViajesPorDia() 
@@ -79,7 +75,7 @@ use TrabajoSube\tiempoFalso;
         $tarjeta->recargar(2000);
         
         // Simular 4 viajes en el mismo día
-        $tiempo->avanzar(300);
+
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1
         $this->assertEquals(3, $tarjeta->GetCantViajesMedioBoleto());
         $this->assertEquals(2000 - $boletoMedio, $tarjeta->getSaldo());
@@ -112,12 +108,15 @@ use TrabajoSube\tiempoFalso;
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(2000);
 
-        $tiempo->avanzar(200);
-        $this->assertFalse($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1 no se podra
-        $this->assertEquals(2000,$tarjeta->getSaldo());
+        echo "toempo" .$tiempo->time();
 
-        $tiempo->avanzar(300);
-        $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 2 se podra
+        $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1 no se podra
+        $this->assertEquals(1940,$tarjeta->getSaldo());
+
+
+        $tiempo->avanzar(200);
+        echo "toempo2" . $tiempo->time();
+        $this->assertFalse($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 2 se podra
         $this->assertEquals(1940,$tarjeta->getSaldo());
     }
     
@@ -130,7 +129,7 @@ use TrabajoSube\tiempoFalso;
         $tarjeta->recargar(2000);
         
         // Simular 4 viajes en el mismo día
-        $tiempo->avanzar(300);
+
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1
         $this->assertEquals(3, $tarjeta->GetCantViajesMedioBoleto());
         $this->assertEquals(2000 - $boletoMedio, $tarjeta->getSaldo());
@@ -163,7 +162,5 @@ use TrabajoSube\tiempoFalso;
         $this->assertEquals(2000 - ($boletoMedio*4)-120-60, $tarjeta->getSaldo());
 
     }
-
-
 }
 ?>

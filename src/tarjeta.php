@@ -22,7 +22,7 @@ class Tarjeta
         $this->id = $id;
     }
 
-    public function recargar($monto) 
+   public function recargar($monto) 
     {
         if (in_array($monto, self::cargasAceptadas)) 
         {
@@ -33,7 +33,7 @@ class Tarjeta
                 $saldoPendiente = $this->saldo - $this->limite_saldo;
                 $this->saldo = $this->limite_saldo;
                 $this->saldoPendiente = $saldoPendiente;
-            }
+            }   
         }
         else
         {
@@ -41,7 +41,7 @@ class Tarjeta
         }
     }
 
-    public function recargarPendiente($monto)                //esta funcion es para que no se fije si el monto de recarga es valido en el caso de ser saldo pendiente
+    public function recargarPendiente($monto) //esta funcion es para que no se fije si el monto de recarga es valido en el caso de ser saldo pendiente
     {
         $this->saldo += $monto;
 
@@ -54,27 +54,28 @@ class Tarjeta
     }
 
     public function descontar($precio) 
-    {           
+    {
         if ($this->saldo >= $precio)
-        {            
+        {
             $this->saldo -= $precio;
 
             if(isset($this->saldoPendiente) && $this->saldoPendiente > 0)
             {
                 $this->recargarPendiente($this->saldoPendiente);
             }
+
             return true;
         }
         else
         {
-            if($this->saldo >= -91.84)
+            if($this->saldo >= -91.84)  //-91.84 ya que en caso de tener un saldo igual o mayor a este al descontarle los 120 quedaria un saldo igual o mayor a -211.84 
             {
                 $this->saldo -= $precio;
                 echo "Viaje Plus utilizado";
                 return true;
             }
             else
-            {   
+            {  
                 echo "Viaje Plus no disponible. \n";
                 return false;
             }
