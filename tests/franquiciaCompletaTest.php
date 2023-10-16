@@ -14,7 +14,7 @@ class franquiciaCompletaTest extends TestCase
     { 
         $inicio = strtotime('today'); // Fecha y hora inicial
         $tiempo = new tiempoFalso($inicio);
-        $tarjeta = new franquiciacompleta($tiempo); 
+        $tarjeta = new franquiciacompleta(1,$tiempo); 
         $tarjeta->recargar(600);
         
         for($i=0; $i<5; $i++)
@@ -28,7 +28,7 @@ class franquiciaCompletaTest extends TestCase
     { 
         $inicio = strtotime('today'); // Fecha y hora inicial
         $tiempo = new tiempoFalso($inicio);
-        $tarjeta = new franquiciacompleta($tiempo); 
+        $tarjeta = new franquiciacompleta(1,$tiempo); 
         $tarjeta->recargar(4000);
         
         $this->assertEquals(True,$tarjeta->descontarFranquiciaCompleta($this->boleto));
@@ -45,8 +45,8 @@ class franquiciaCompletaTest extends TestCase
 
     public function testViajesGratisDespuesDeUnNuevoDia() {
         $inicio = strtotime('today'); // Fecha y hora inicial
-        $tiempoFalso = new tiempoFalso($inicio);
-        $tarjeta = new FranquiciaCompleta($tiempoFalso);
+        $tiempo = new tiempoFalso($inicio);
+        $tarjeta = new franquiciacompleta(1,$tiempo); 
         
         // Realizar dos viajes gratuitos en un día
         $this->assertTrue($tarjeta->descontarFranquiciaCompleta(0)); // Primer viaje gratis
@@ -54,7 +54,7 @@ class franquiciaCompletaTest extends TestCase
         $this->assertEquals(0, $tarjeta->getCantViajesGratis());
 
         // Simular un nuevo día
-        $tiempoFalso->avanzar(86400); // Avanzar un día 
+        $tiempo->avanzar(86400); // Avanzar un día 
 
         // Realizar un viaje en el nuevo día (debe ser gratis nuevamente)
         $this->assertTrue($tarjeta->descontarFranquiciaCompleta(0)); // Tercer viaje gratis
