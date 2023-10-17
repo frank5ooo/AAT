@@ -59,7 +59,7 @@ class TarjetaTest extends TestCase
   
     public function testDescontarSinSaldoUrbano()
     {
-        $tiempo = new TiempoFalso;
+         $tiempo = new TiempoFalso;
 
         $tarjeta = new Tarjeta(1,$tiempo);
 
@@ -73,6 +73,11 @@ class TarjetaTest extends TestCase
         $this->assertEquals(-90, $tarjeta->getSaldo());
 
         $resultado = $tarjeta->descontar($this->boletoUrbano);   //viaje 3
+
+        $this->assertTrue($resultado);
+        $this->assertEquals(-210, $tarjeta->getSaldo());
+        
+        $resultado = $tarjeta->descontar($this->boletoUrbano);   //viaje 4
 
         $this->assertFalse($resultado);
     }

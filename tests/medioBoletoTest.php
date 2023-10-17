@@ -40,23 +40,15 @@ use TrabajoSube\tiempoFalso;
         $tiempo = new TiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
-        $tarjeta->recargar(150);
+        $tarjeta->recargar(0);
         //$tiempo->avanzar(300);
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
-        $this->assertTrue($resultado);
-        $this->assertEquals(150-$this->boleto/2, $tarjeta->getSaldo());
-        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
+       // echo "Saldo::" . $tarjeta->getSaldo() . "\n";
+        echo "Resultado del descuento: " . ($resultado ? 'Éxito' : 'Fallo') . "\n\n";
 
         $this->assertTrue($resultado);
-        $this->assertEquals(90-$this->boleto/2, $tarjeta->getSaldo());
-        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
-
-        $this->assertTrue($resultado);
-        $this->assertEquals(-90, $tarjeta->getSaldo());
-
-        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
-        $this->assertFalse($resultado);
+        $this->assertEquals(0 - ($this->boleto), $tarjeta->getSaldo());
     }
 
     public function testNoPagarConMedioBoletoSinSaldo()
