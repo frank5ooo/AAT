@@ -51,7 +51,7 @@ class TarjetaTest extends TestCase
 
     public function testDescontarInterUrbano()
     {   
-        $interUrbano = new lineaInterUrbano(144);
+        $interUrbano = new LineaInterUrbano(144);
         $boletoInterUrbano = $interUrbano->getPrecio();
 
         $tiempo = new TiempoFalso;
@@ -89,7 +89,7 @@ class TarjetaTest extends TestCase
 
     public function testDescontarSinSaldoInterUrbano()
     {   
-        $interUrbano = new lineaInterUrbano(144);
+        $interUrbano = new LineaInterUrbano(144);
         $tiempo = new TiempoFalso;
 
         $tarjeta = new Tarjeta(1,$tiempo);
