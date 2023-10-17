@@ -32,7 +32,16 @@ class TarjetaTest extends TestCase
     
             $this->assertEquals($saldoEsperado, $tarjeta->getSaldo());
         }
-        
+    }
+
+    public function testRecargarMontoNoAceptado()
+    {
+        $tiempo = new TiempoFalso;
+        $tarjeta = new Tarjeta(1, $tiempo);
+    
+        $tarjeta->recargar(100);
+    
+        $this->assertEquals(0, $tarjeta->getSaldo()); 
     }
 
     public function testDescontarUrbano()
