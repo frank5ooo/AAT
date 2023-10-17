@@ -10,16 +10,17 @@ use TrabajoSube\franquiciacompleta;
 use TrabajoSube\medioboleto;
 use TrabajoSube\tiempoReal;
 
-
 class boletoTest extends TestCase 
 {   
-    private $boleto =120;
+    private $boleto = 120;
     public function testBoletoParaTarjetaNormal() 
     {
         $tiempo = new TiempoReal;
         $tarjeta = new tarjeta(1, $tiempo);
-        $colectivo = new colectivo(120);
+        $colectivo = new colectivo(122);
+
         $tarjeta->recargar(2000);
+
         $boleto = new Boleto($tarjeta, $colectivo);
 
         $this->assertEquals($colectivo, $boleto->getLineaColectivo());
@@ -28,7 +29,7 @@ class boletoTest extends TestCase
         $this->assertEquals(date("Y-m-d H:i:s", time()), $boleto->getFecha());
         $this->assertEquals(get_class($tarjeta), $boleto->getTipoTarjeta());
         $this->assertEquals(2000-$this->boleto, $boleto->getSaldoRestante());
-        $this->assertEquals($tarjeta->getPrecio(), $boleto->getboleto());
+        $this->assertEquals($colectivo->getPrecio(), $boleto->getboleto());
 
         $this->assertEquals("Abona saldo 120 (saldo restante: ". number_format(2000-$this->boleto,2).")", $boleto->getDescripcionExtra());
     }
@@ -49,7 +50,7 @@ class boletoTest extends TestCase
         $this->assertEquals(date("Y-m-d H:i:s", time()), $boleto->getFecha());
         $this->assertEquals(get_class($tarjeta), $boleto->getTipoTarjeta());
         $this->assertEquals(2000-60, $boleto->getSaldoRestante());
-        $this->assertEquals($tarjeta->getPrecio(), $boleto->getboleto());
+        $this->assertEquals($colectivo->getPrecio(), $boleto->getboleto());
 
         $this->assertEquals("Abona saldo 60 (saldo restante: ". number_format(2000-$medioboleto,2).")", $boleto->getDescripcionExtra());
 

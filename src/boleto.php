@@ -6,9 +6,7 @@ class Boleto {
     private $lineaColectivo;
     private $boleto;
     private $saldo;
-
     private $saldoRestante;
-
     private $idTarjeta;
     private $descripcionExtra;
 
@@ -19,7 +17,8 @@ class Boleto {
         $this->idTarjeta = $tarjeta->getID();
         $this->fecha = date("Y-m-d H:i:s");
         $this->tipoTarjeta = get_class($tarjeta); 
-        $this->boleto = $tarjeta->getPrecio();
+        $this->boleto = $this->lineaColectivo->getPrecio();
+
         $this->descripcionExtra = "";
 
         // Verificar si se canceló el saldo negativo.
@@ -82,6 +81,11 @@ class Boleto {
     public function getDescripcionExtra() 
     {
         return $this->descripcionExtra;
+    }
+
+    public function getTodo()
+    {
+        return ([$this->fecha, $this->tipoTarjeta, $this->lineaColectivo, $this->boleto, $this->saldo, $this->saldoRestante, $this->idTarjeta ,$this->descripcionExtra]);
     }
 }
 
