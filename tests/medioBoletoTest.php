@@ -158,13 +158,13 @@ use TrabajoSube\TiempoReal;
         $tiempo->avanzar(300);
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto)); // Viaje 5
         $this->assertEquals(0, $tarjeta->GetCantViajesMedioBoleto());
-        $this->assertEquals(2000 - ($boletoMedio * 4) - ($this->boleto / 2), $tarjeta->getSaldo());
+        $this->assertEquals(2000 - ($boletoMedio * 4) - $this->boleto, $tarjeta->getSaldo());
 
         // Cambio de día
         $tiempo->avanzar(86400);
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1
         $this->assertEquals(3, $tarjeta->GetCantViajesMedioBoleto());
-        $this->assertEquals(2000 - ($boletoMedio * 4) - ($this->boleto / 2) - ($this->boleto / 2), $tarjeta->getSaldo());
+        $this->assertEquals(2000 - ($boletoMedio * 4) - $this->boleto - ($this->boleto / 2), $tarjeta->getSaldo());
     }
 
     public function testViajar23Horas(){
