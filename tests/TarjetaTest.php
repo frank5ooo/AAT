@@ -7,8 +7,8 @@ use TrabajoSube\tarjeta;
 use TrabajoSube\tiempoFalso;
 use TrabajoSube\lineaInterUrbano;
 
-
-class TarjetaTest extends TestCase {
+class TarjetaTest extends TestCase 
+{
     private $montosValidos = [150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 
                 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 2000, 
                 2500, 3000, 3500, 4000];
@@ -85,7 +85,6 @@ class TarjetaTest extends TestCase {
         $resultado = $tarjeta->descontar($this->boletoUrbano);   //viaje 3
 
         $this->assertFalse($resultado);
-
     }
 
     public function testDescontarSinSaldoInterUrbano()
@@ -106,7 +105,6 @@ class TarjetaTest extends TestCase {
 
         $resultado = $tarjeta->descontar($boletoInterUrbano); 
         $this->assertFalse($resultado);
-
     }
 
     public function testRecargaConExcedente()
