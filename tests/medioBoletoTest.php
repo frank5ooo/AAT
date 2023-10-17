@@ -23,7 +23,6 @@ use TrabajoSube\tiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(1000);
-        $tiempo->avanzar(3600*7);
 
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
@@ -41,16 +40,23 @@ use TrabajoSube\tiempoFalso;
         $tiempo = new TiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
-        $tarjeta->recargar(0);
+        $tarjeta->recargar(150);
         //$tiempo->avanzar(300);
-        $tiempo->avanzar(3600*7);
         $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
-       // echo "Saldo::" . $tarjeta->getSaldo() . "\n";
-        echo "Resultado del descuento: " . ($resultado ? 'Éxito' : 'Fallo') . "\n\n";
+        $this->assertTrue($resultado);
+        $this->assertEquals(150-$this->boleto/2, $tarjeta->getSaldo());
+        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
 
         $this->assertTrue($resultado);
-        $this->assertEquals(0 - ($this->boleto), $tarjeta->getSaldo());
+        $this->assertEquals(90-$this->boleto/2, $tarjeta->getSaldo());
+        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
+
+        $this->assertTrue($resultado);
+        $this->assertEquals(-90, $tarjeta->getSaldo());
+
+        $resultado = $tarjeta->descontarMedioBoleto($this->boleto);
+        $this->assertFalse($resultado);
     }
 
     public function testNoPagarConMedioBoletoSinSaldo()
@@ -76,7 +82,6 @@ use TrabajoSube\tiempoFalso;
         $tarjeta->recargar(2000);
         
         // Simular 4 viajes en el mismo día
-        $tiempo->avanzar(3600*7);
 
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1
         $this->assertEquals(3, $tarjeta->GetCantViajesMedioBoleto());
@@ -109,7 +114,6 @@ use TrabajoSube\tiempoFalso;
 
         $tarjeta = new MedioBoleto(1,$tiempo); 
         $tarjeta->recargar(2000);
-        $tiempo->avanzar(3600*7);
 
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1 no se podra
         $this->assertEquals(1940,$tarjeta->getSaldo());
@@ -130,7 +134,6 @@ use TrabajoSube\tiempoFalso;
         $tarjeta->recargar(2000);
         
         // Simular 4 viajes en el mismo día
-        $tiempo->avanzar(3600*7);
 
         $this->assertTrue($tarjeta->descontarMedioBoleto($this->boleto));    // Viaje 1
         $this->assertEquals(3, $tarjeta->GetCantViajesMedioBoleto());
