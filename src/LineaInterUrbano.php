@@ -2,7 +2,7 @@
 
 namespace TrabajoSube;
 
-use TrabajoSube\Colectivo;
+use TrabajoSube\colectivo;
 
 class LineaInterUrbano extends Colectivo
 {
