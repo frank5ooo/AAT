@@ -1,7 +1,7 @@
 <?php
 namespace TrabajoSube;
 
-    class TiempoReal implements TiempoInterface {
+class TiempoReal implements TiempoInterface {
 
     public function time(){
         return time(); 
