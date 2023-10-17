@@ -19,12 +19,11 @@ class MedioBoleto extends Tarjeta {
             $this->cantViajesMedioBoleto=4;
         }
 
-        if($this->tiempoActual < 300 && $this->tiempoActual >0) // Menos de 5 minutos
+        if($this->tiempoActual < 300 &&$this->tiempoActual >0) // Menos de 5 minutos
         { 
             echo "Debe esperar al menos 5 minutos antes de realizar otro viaje.". $this->tiempoActual;
             return false;
         }
-
         if($this->cantViajesMedioBoleto > 0)
         {   
             // // Aplicar descuento del 50%
